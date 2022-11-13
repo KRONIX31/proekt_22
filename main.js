@@ -122,7 +122,7 @@ if(!localStorage.firstOn){
 
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
+    response = await fetch('http://localhost:5500/data/data_11.json')
     data = await response.json()
     console.log(data)
     render()
@@ -499,19 +499,24 @@ async function getdata(){
                 for(i = 0; i < currentColumn.length; i++){
                     currentColumn[i].classList.add('current_day')
                 }
-                
+                tableSlider.style.cssText = `transform: translateX(calc(-20% * ${day}));`
             }
-            tableSlider.style.cssText = `transform: translateX(calc(-20% * ${day}));`
-
+            
             const tableNav = slide_1_cont.querySelectorAll('nav span')
             for(let i = 0; i < tableNav.length; i++){
                 tableNav[i].addEventListener('click', ()=>{
                     if(!tableNav[i].classList.contains('active_day')){
-                        const activeDay = slide_1_cont.querySelector('nav .active_day')
-                        activeDay.classList.remove('active_day')
-                        tableNav[i].classList.add('active_day')
-                        //
-                        tableSlider.style.cssText = `transform: translateX(calc(-20% * ${i}))`
+                        if(slide_1_cont.querySelector('nav .active_day')){
+                            const activeDay = slide_1_cont.querySelector('nav .active_day')
+                            activeDay.classList.remove('active_day')
+                            tableNav[i].classList.add('active_day')
+                            //
+                            tableSlider.style.cssText = `transform: translateX(calc(-20% * ${i}))`
+                        } else{
+                            tableNav[i].classList.add('active_day')
+                            //
+                            tableSlider.style.cssText = `transform: translateX(calc(-20% * ${i}))`
+                        }
                     }
                 })
             }

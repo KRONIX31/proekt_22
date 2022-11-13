@@ -59,7 +59,7 @@ table {
     display: none;
     justify-content: center;
     align-items: flex-start;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.85);
     width: 100vw;
     height: 100vh;
     transition: opacity 0.4s;
@@ -83,7 +83,7 @@ table {
     border-radius: 50%;
     box-shadow: 0 0 0 5px #4fc3dc2e, 0 0 40px #4fc3dc, 0 0 100px #4fc3dc;
     animation: dialogBg 10s linear infinite;
-    animation-duration: calc(500s / var(--i));
+    animation-duration: calc(100s / var(--i));
 }
 .bubbles span:nth-child(even){
     background-color: #ff6768;
@@ -247,15 +247,6 @@ table {
     position: relative;
     overflow: hidden;
 }
-/*.app_header::before{
-    content: '';
-    position: absolute;
-    top: 20%;
-    bottom: 20%;
-    left: 12px;
-    width: calc(var(--index)*7);
-    background-color: rgba(255, 255, 255, 0.099);
-}*/
 .poloska{
     position: absolute;
 }
@@ -393,13 +384,14 @@ table {
     width: 100%;
 }
 .burger_ul::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 .burger_ul::-webkit-scrollbar-track {
-    width: 6px;
+    width: 4px;
 }
 .burger_ul::-webkit-scrollbar-thumb {
-    background-color: #ff6767ab;
+    background-color: #ff676770;
+    border-radius: 20px 10px 10px 20px;
 }
 
 
