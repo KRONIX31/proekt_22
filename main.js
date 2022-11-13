@@ -122,7 +122,7 @@ if(!localStorage.firstOn){
 
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    response = await fetch('http://localhost:5500/data/data_11.json')
+    response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
     data = await response.json()
     console.log(data)
     render()
