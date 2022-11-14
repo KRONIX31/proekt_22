@@ -1,108 +1,16 @@
 const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+const timetable = [[8, 30, 9, 10], [9, 15, 9, 55], [10, 00, 10, 40], [10, 45, 11, 25], [11, 30, 12,10],
+[12, 15, 12, 55], [13, 00, 13, 40], [13, 45, 14, 25], [14, 30, 15, 10], [15, 15, 15, 55]]
 let response, data
 const day = new Date().getDay() - 1
-const component = `<table>
-<thead>
-    <tr>
-        <th>№</th>
-        <th>Понедельник</th>
-        <th>Вторник</th>
-        <th>Среда</th>
-        <th>Четверг</th>
-        <th>Пятница</th>
-    </tr>
-</thead>
-<tbody>
-    <tr> <!-- 1 -->
-        <th>1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 2 -->
-        <th>2</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 3 -->
-        <th>3</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 4 -->
-        <th>4</th>
-        <td></td>
-        <td></td>
-        <td></dh>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 5 -->
-        <th>5</th>
-        <th></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 6 -->
-        <th>6</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 7 -->
-        <th>7</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 8 -->
-        <th>8</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 9 -->
-        <th>9</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr> <!-- 10 -->
-        <th>10</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-</tbody>
-</table>`
 // Var DIALOG
-const dialogText = document.querySelector('.dialog_text')
+/*const dialogText = document.querySelector('.dialog_text')
 const dialogText_p = document.querySelector('.dialog_text div:first-child')
 const dialogIconWrapper = document.querySelector('.icon_wrapper')
 const dialogFirstBlock = document.querySelector('.dialog_first_block')
 const dialogUl = document.querySelector('.dialog_ul')
 const dialogUlLists = document.querySelectorAll('li')
-const dialogButton = document.querySelector('.dialog_second_block button')
+const dialogButton = document.querySelector('.dialog_second_block button')*/
 // Var HEADER
 const headerNumClass = document.querySelector('.header_num_class')
 const headerNumClass_p = document.querySelector('.header_num_class p')
@@ -114,15 +22,27 @@ const slide_1_cont = document.querySelector('.slide_1_container')
 
 
 //DIALOG
-if(!localStorage.firstOn){
+/*if(!localStorage.firstOn){
     const firstOn = document.querySelector('.first_on')
     firstOn.style.display = 'flex'
     firstOn.classList.add('welcome_visible')
+}*/
+document.fonts.onloadingdone = () => {
+    console.log('font-face load event')
+    const loadScreen = document.querySelector('.load_screen')
+    loadScreen.style.opacity = '0'
+    setTimeout(()=>{
+        loadScreen.style.display = 'none'
+    }, 300)
 }
-
+  
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
+    const response = await fetch('http://localhost:5500/data/data_11.json')
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+    }
     data = await response.json()
     console.log(data)
     render()
@@ -500,6 +420,8 @@ async function getdata(){
                     currentColumn[i].classList.add('current_day')
                 }
                 tableSlider.style.cssText = `transform: translateX(calc(-20% * ${day}));`
+            } else{
+                slide_1_cont.querySelector('nav span').classList.add('active_day')
             }
             
             const tableNav = slide_1_cont.querySelectorAll('nav span')
@@ -525,7 +447,7 @@ async function getdata(){
     window.onresize = render
 }
 
-function toggleDialog(){
+/*function toggleDialog(){
     dialogText_p.classList.toggle('dialog_active')
     dialogFirstBlock.classList.toggle('dialog_active')
     dialogIconWrapper.querySelector('img').classList.toggle('icon_img_active')
@@ -554,7 +476,7 @@ dialogButton.addEventListener('click', ()=>{
             dialogFirstBlock.parentElement.parentElement.style.display = 'none'
         }, 300)
     }
-})
+})*/
 
 
 // HEADER
@@ -570,17 +492,21 @@ window.addEventListener('click', (e)=>{
     }
 })
 
-headerNumClass.addEventListener('click', ()=>{
-    if(window.innerWidth > 560){  //Desktop
+headerNumClass.addEventListener('click', openBurger)
+function openBurger(){
+    if(window.innerWidth > 640){  //Desktop
         burgerDesktop.style.cssText = `transform: translateX(100%);
-        opacity: 1`
+        opacity: 1;`
+        burgerMobile.classList.remove('burger_mobile_open')
     } else{  //Mobile
         burgerMobile.style.display = 'block'
         setTimeout(()=>{
             burgerMobile.classList.add('burger_mobile_open')
         }, 10)
+        burgerDesktop.style.cssText = `transform: translateX(0%);
+        opacity: 0`
     }
-})
+}
 
 burgerMobileClose_img.addEventListener('click', ()=>{
     burgerMobile.classList.remove('burger_mobile_open')
