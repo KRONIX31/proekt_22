@@ -1,6 +1,8 @@
 const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
 const timetable = [[8, 30, 9, 10], [9, 15, 9, 55], [10, 00, 10, 40], [10, 45, 11, 25], [11, 30, 12,10],
 [12, 15, 12, 55], [13, 00, 13, 40], [13, 45, 14, 25], [14, 30, 15, 10], [15, 15, 15, 55]]
+oldHeightInner = window.innerHeight
+oldHeightScreen = window.screen.height
 let response, data
 const day = new Date().getDay() - 1
 // Var DIALOG
@@ -38,7 +40,7 @@ document.fonts.onloadingdone = () => {
   
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    const response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
+    const response = await fetch('http://localhost:5500/data/data_11.json')
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
@@ -49,7 +51,11 @@ async function getdata(){
     window.onresize = render
     render()
     function render(){
-        alert(window.screen.height, window.innerHeight)
+        if(window.innerHeight !== oldHeightInner && window.screen.height !== oldHeightScreen){
+            alert(window.screen.height, window.innerHeight)
+            oldHeightInner = window.innerHeight
+            oldHeightScreen = window.screen.height
+        }
         if(window.innerWidth > 640){ // Desktop Table
             const componentDesktop = `<table>
         <thead>
