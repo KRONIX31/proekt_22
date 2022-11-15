@@ -38,15 +38,18 @@ document.fonts.onloadingdone = () => {
   
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    const response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
+    const response = await fetch('http://localhost:5500/data/data_11.json')
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
     data = await response.json()
     console.log(data)
+
+    window.onresize = render
     render()
     function render(){
+        console.log(window.screen.height, window.innerHeight)
         if(window.innerWidth > 640){ // Desktop Table
             const componentDesktop = `<table>
         <thead>
@@ -148,6 +151,15 @@ async function getdata(){
                 for(i = 0; i < currentCell.length; i+=5){
                     currentCell[i + day].classList.add('current_day')
                 }
+                setInterval(()=>{
+                    let time = new Date()
+                    let hours = time.getHours()
+                    let minutes = time.getMinutes()
+                    if(hours <= timetable[0][0]){
+                        
+                    }
+                    //console.log(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
+                }, 10000)
             }
         } else{ // Mobile Table
             const componentMobile = `
@@ -444,7 +456,6 @@ async function getdata(){
             }
         }
     }
-    window.onresize = render
 }
 
 /*function toggleDialog(){
