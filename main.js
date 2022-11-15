@@ -38,7 +38,7 @@ document.fonts.onloadingdone = () => {
   
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    const response = await fetch('http://localhost:5500/data/data_11.json')
+    const response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
