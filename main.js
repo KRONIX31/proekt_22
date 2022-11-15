@@ -49,7 +49,7 @@ async function getdata(){
     window.onresize = render
     render()
     function render(){
-        console.log(window.screen.height, window.innerHeight)
+        alert(window.screen.height, window.innerHeight)
         if(window.innerWidth > 640){ // Desktop Table
             const componentDesktop = `<table>
         <thead>
