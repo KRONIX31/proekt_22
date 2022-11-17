@@ -1,6 +1,21 @@
 const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-const timetable = [[8, 30, 9, 10], [9, 15, 9, 55], [10, 00, 10, 40], [10, 45, 11, 25], [11, 30, 12,10],
-[12, 15, 12, 55], [13, 00, 13, 40], [13, 45, 14, 25], [14, 30, 15, 10], [15, 15, 15, 55]]
+todayYear = new Date().getFullYear()
+todayMonth = new Date().getMonth()
+todayDay = new Date().getDate()
+const timetable = [
+[new Date(todayYear, todayMonth, todayDay, 8, 30), new Date(todayYear, todayMonth, todayDay, 9, 10)],
+[new Date(todayYear, todayMonth, todayDay, 9, 15), new Date(todayYear, todayMonth, todayDay, 9, 55)],
+[new Date(todayYear, todayMonth, todayDay, 10, 0), new Date(todayYear, todayMonth, todayDay, 10, 40)],
+[new Date(todayYear, todayMonth, todayDay, 10, 45), new Date(todayYear, todayMonth, todayDay, 11, 25)],
+[new Date(todayYear, todayMonth, todayDay, 11, 30), new Date(todayYear, todayMonth, todayDay, 12, 10)],
+[new Date(todayYear, todayMonth, todayDay, 12, 15), new Date(todayYear, todayMonth, todayDay, 12, 55)],
+[new Date(todayYear, todayMonth, todayDay, 13, 0), new Date(todayYear, todayMonth, todayDay, 13, 40)],
+[new Date(todayYear, todayMonth, todayDay, 13, 45), new Date(todayYear, todayMonth, todayDay, 14, 25)],
+[new Date(todayYear, todayMonth, todayDay, 14, 30), new Date(todayYear, todayMonth, todayDay, 15, 10)],
+[new Date(todayYear, todayMonth, todayDay, 15, 15), new Date(todayYear, todayMonth, todayDay, 15, 55)],
+[new Date(todayYear, todayMonth, todayDay, 16, 0), new Date(todayYear, todayMonth, todayDay, 16, 40)]
+]
+
 let response, data
 const day = new Date().getDay() - 1
 // Var DIALOG
@@ -20,6 +35,22 @@ const burgerDesktop = document.querySelector('.burger_desktop')
 // Var App
 const slide_1_cont = document.querySelector('.slide_1_container')
 
+notifyMe()
+function notifyMe() {
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("Ваш браузер не поддерживает уведомления");
+    } else if (Notification.permission === "granted") {
+
+      const notification = new Notification("Ку хайп твое уже не первое уведомление");
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          const notification = new Notification("уведомления включены");
+        }
+      })
+    }
+}
 
 //DIALOG
 /*if(!localStorage.firstOn){
@@ -38,7 +69,7 @@ document.fonts.onloadingdone = () => {
   
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    const response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
+    const response = await fetch('http://localhost:5500/data/data_11.json')
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
@@ -142,6 +173,14 @@ async function getdata(){
                 <td>${data[3][10]}</td>
                 <td>${data[4][10]}</td>
             </tr>
+            <tr> <!-- 11 -->
+            <th>11</th>
+            <td>${data[0][11]}</td>
+            <td>${data[1][11]}</td>
+            <td>${data[2][11]}</td>
+            <td>${data[3][11]}</td>
+            <td>${data[4][11]}</td>
+        </tr>
         </tbody>
             </table>`
             slide_1_cont.innerHTML = componentDesktop
@@ -161,298 +200,322 @@ async function getdata(){
                 }, 10000)
             }
         } else{ // Mobile Table
-            const componentMobile = `
-        <nav class="table_nav">
-            <span${day == 0? ' class="active_day"': ''}>Понедельник</span>
-            <span${day == 1? ' class="active_day"': ''}>Вторник</span>
-            <span${day == 2? ' class="active_day"': ''}>Среда</span>
-            <span${day == 3? ' class="active_day"': ''}>Четверг</span>
-            <span${day == 4? ' class="active_day"': ''}>Пятница</span>
-        </nav>
-        <div class="table_slider_wrapper">
-            <div class="table_slider">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th class="table_day">Понедельник</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>${data[0][1]}</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>${data[0][2]}</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>${data[0][3]}</td>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <td>${data[0][4]}</td>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <td>${data[0][5]}</td>
-                        </tr>
-                        <tr>
-                            <th>6</th>
-                            <td>${data[0][6]}</td>
-                        </tr>
-                        <tr>
-                            <th>7</th>
-                            <td>${data[0][7]}</td>
-                        </tr>
-                        <tr>
-                            <th>8</th>
-                            <td>${data[0][8]}</td>
-                        </tr>
-                        <tr>
-                            <th>9</th>
-                            <td>${data[0][9]}</td>
-                        </tr>
-                        <tr>
-                            <th>10</th>
-                            <td>${data[0][10]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th class="table_day">Вторник</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>${data[1][1]}</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>${data[1][2]}</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>${data[1][3]}</td>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <td>${data[1][4]}</td>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <td>${data[1][5]}</td>
-                        </tr>
-                        <tr>
-                            <th>6</th>
-                            <td>${data[1][6]}</td>
-                        </tr>
-                        <tr>
-                            <th>7</th>
-                            <td>${data[1][7]}</td>
-                        </tr>
-                        <tr>
-                            <th>8</th>
-                            <td>${data[1][8]}</td>
-                        </tr>
-                        <tr>
-                            <th>9</th>
-                            <td>${data[1][9]}</td>
-                        </tr>
-                        <tr>
-                            <th>10</th>
-                            <td>${data[1][10]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th class="table_day">Среда</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>${data[2][1]}</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>${data[2][2]}</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>${data[2][3]}</td>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <td>${data[2][4]}</td>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <td>${data[2][5]}</td>
-                        </tr>
-                        <tr>
-                            <th>6</th>
-                            <td>${data[2][6]}</td>
-                        </tr>
-                        <tr>
-                            <th>7</th>
-                            <td>${data[2][7]}</td>
-                        </tr>
-                        <tr>
-                            <th>8</th>
-                            <td>${data[2][8]}</td>
-                        </tr>
-                        <tr>
-                            <th>9</th>
-                            <td>${data[2][9]}</td>
-                        </tr>
-                        <tr>
-                            <th>10</th>
-                            <td>${data[2][10]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th class="table_day">Четверг</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>${data[3][1]}</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>${data[3][2]}</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>${data[3][3]}</td>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <td>${data[3][4]}</td>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <td>${data[3][5]}</td>
-                        </tr>
-                        <tr>
-                            <th>6</th>
-                            <td>${data[3][6]}</td>
-                        </tr>
-                        <tr>
-                            <th>7</th>
-                            <td>${data[3][7]}</td>
-                        </tr>
-                        <tr>
-                            <th>8</th>
-                            <td>${data[3][8]}</td>
-                        </tr>
-                        <tr>
-                            <th>9</th>
-                            <td>${data[3][9]}</td>
-                        </tr>
-                        <tr>
-                            <th>10</th>
-                            <td>${data[3][10]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th class="table_day">Пятница</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>${data[4][1]}</td>
-                        </tr>
-                        <tr>
-                            <th>2</th>
-                            <td>${data[4][2]}</td>
-                        </tr>
-                        <tr>
-                            <th>3</th>
-                            <td>${data[4][3]}</td>
-                        </tr>
-                        <tr>
-                            <th>4</th>
-                            <td>${data[4][4]}</td>
-                        </tr>
-                        <tr>
-                            <th>5</th>
-                            <td>${data[4][5]}</td>
-                        </tr>
-                        <tr>
-                            <th>6</th>
-                            <td>${data[4][6]}</td>
-                        </tr>
-                        <tr>
-                            <th>7</th>
-                            <td>${data[4][7]}</td>
-                        </tr>
-                        <tr>
-                            <th>8</th>
-                            <td>${data[4][8]}</td>
-                        </tr>
-                        <tr>
-                            <th>9</th>
-                            <td>${data[4][9]}</td>
-                        </tr>
-                        <tr>
-                            <th>10</th>
-                            <td>${data[4][10]}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            </div>`
-            slide_1_cont.innerHTML = componentMobile
-            const currentColumn = slide_1_cont.querySelectorAll(`table:nth-child(${day+1}) tbody tr td`)
-            const tableSlider = slide_1_cont.querySelector('.table_slider')
-            if(day < 5 && day > -1){
-                for(i = 0; i < currentColumn.length; i++){
-                    currentColumn[i].classList.add('current_day')
-                }
-                tableSlider.style.cssText = `transform: translateX(calc(-20% * ${day}));`
-            } else{
-                slide_1_cont.querySelector('nav span').classList.add('active_day')
-            }
-            
-            const tableNav = slide_1_cont.querySelectorAll('nav span')
-            for(let i = 0; i < tableNav.length; i++){
-                tableNav[i].addEventListener('click', ()=>{
-                    if(!tableNav[i].classList.contains('active_day')){
-                        if(slide_1_cont.querySelector('nav .active_day')){
-                            const activeDay = slide_1_cont.querySelector('nav .active_day')
-                            activeDay.classList.remove('active_day')
-                            tableNav[i].classList.add('active_day')
-                            //
-                            tableSlider.style.cssText = `transform: translateX(calc(-20% * ${i}))`
-                        } else{
-                            tableNav[i].classList.add('active_day')
-                            //
-                            tableSlider.style.cssText = `transform: translateX(calc(-20% * ${i}))`
-                        }
+
+            if(!slide_1_cont.querySelector('nav')){
+                const componentMobile = `
+                <nav class="table_nav">
+                    <span${day == 0? ' class="active_day"': ''}>Понедельник</span>
+                    <span${day == 1? ' class="active_day"': ''}>Вторник</span>
+                    <span${day == 2? ' class="active_day"': ''}>Среда</span>
+                    <span${day == 3? ' class="active_day"': ''}>Четверг</span>
+                    <span${day == 4? ' class="active_day"': ''}>Пятница</span>
+                </nav>
+                <div class="table_slider_wrapper">
+                    <div class="table_slider">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="table_day">Понедельник</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td>${data[0][1]}</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>${data[0][2]}</td>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <td>${data[0][3]}</td>
+                                </tr>
+                                <tr>
+                                    <th>4</th>
+                                    <td>${data[0][4]}</td>
+                                </tr>
+                                <tr>
+                                    <th>5</th>
+                                    <td>${data[0][5]}</td>
+                                </tr>
+                                <tr>
+                                    <th>6</th>
+                                    <td>${data[0][6]}</td>
+                                </tr>
+                                <tr>
+                                    <th>7</th>
+                                    <td>${data[0][7]}</td>
+                                </tr>
+                                <tr>
+                                    <th>8</th>
+                                    <td>${data[0][8]}</td>
+                                </tr>
+                                <tr>
+                                    <th>9</th>
+                                    <td>${data[0][9]}</td>
+                                </tr>
+                                <tr>
+                                    <th>10</th>
+                                    <td>${data[0][10]}</td>
+                                </tr>
+                                <tr>
+                                    <th>11</th>
+                                    <td>${data[0][11]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="table_day">Вторник</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td>${data[1][1]}</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>${data[1][2]}</td>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <td>${data[1][3]}</td>
+                                </tr>
+                                <tr>
+                                    <th>4</th>
+                                    <td>${data[1][4]}</td>
+                                </tr>
+                                <tr>
+                                    <th>5</th>
+                                    <td>${data[1][5]}</td>
+                                </tr>
+                                <tr>
+                                    <th>6</th>
+                                    <td>${data[1][6]}</td>
+                                </tr>
+                                <tr>
+                                    <th>7</th>
+                                    <td>${data[1][7]}</td>
+                                </tr>
+                                <tr>
+                                    <th>8</th>
+                                    <td>${data[1][8]}</td>
+                                </tr>
+                                <tr>
+                                    <th>9</th>
+                                    <td>${data[1][9]}</td>
+                                </tr>
+                                <tr>
+                                    <th>10</th>
+                                    <td>${data[1][10]}</td>
+                                </tr>
+                                <tr>
+                                    <th>11</th>
+                                    <td>${data[0][11]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="table_day">Среда</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td>${data[2][1]}</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>${data[2][2]}</td>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <td>${data[2][3]}</td>
+                                </tr>
+                                <tr>
+                                    <th>4</th>
+                                    <td>${data[2][4]}</td>
+                                </tr>
+                                <tr>
+                                    <th>5</th>
+                                    <td>${data[2][5]}</td>
+                                </tr>
+                                <tr>
+                                    <th>6</th>
+                                    <td>${data[2][6]}</td>
+                                </tr>
+                                <tr>
+                                    <th>7</th>
+                                    <td>${data[2][7]}</td>
+                                </tr>
+                                <tr>
+                                    <th>8</th>
+                                    <td>${data[2][8]}</td>
+                                </tr>
+                                <tr>
+                                    <th>9</th>
+                                    <td>${data[2][9]}</td>
+                                </tr>
+                                <tr>
+                                    <th>10</th>
+                                    <td>${data[2][10]}</td>
+                                </tr>
+                                <tr>
+                                    <th>11</th>
+                                    <td>${data[0][11]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="table_day">Четверг</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td>${data[3][1]}</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>${data[3][2]}</td>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <td>${data[3][3]}</td>
+                                </tr>
+                                <tr>
+                                    <th>4</th>
+                                    <td>${data[3][4]}</td>
+                                </tr>
+                                <tr>
+                                    <th>5</th>
+                                    <td>${data[3][5]}</td>
+                                </tr>
+                                <tr>
+                                    <th>6</th>
+                                    <td>${data[3][6]}</td>
+                                </tr>
+                                <tr>
+                                    <th>7</th>
+                                    <td>${data[3][7]}</td>
+                                </tr>
+                                <tr>
+                                    <th>8</th>
+                                    <td>${data[3][8]}</td>
+                                </tr>
+                                <tr>
+                                    <th>9</th>
+                                    <td>${data[3][9]}</td>
+                                </tr>
+                                <tr>
+                                    <th>10</th>
+                                    <td>${data[3][10]}</td>
+                                </tr>
+                                <tr>
+                                    <th>11</th>
+                                    <td>${data[0][11]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th class="table_day">Пятница</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td>${data[4][1]}</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>${data[4][2]}</td>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <td>${data[4][3]}</td>
+                                </tr>
+                                <tr>
+                                    <th>4</th>
+                                    <td>${data[4][4]}</td>
+                                </tr>
+                                <tr>
+                                    <th>5</th>
+                                    <td>${data[4][5]}</td>
+                                </tr>
+                                <tr>
+                                    <th>6</th>
+                                    <td>${data[4][6]}</td>
+                                </tr>
+                                <tr>
+                                    <th>7</th>
+                                    <td>${data[4][7]}</td>
+                                </tr>
+                                <tr>
+                                    <th>8</th>
+                                    <td>${data[4][8]}</td>
+                                </tr>
+                                <tr>
+                                    <th>9</th>
+                                    <td>${data[4][9]}</td>
+                                </tr>
+                                <tr>
+                                    <th>10</th>
+                                    <td>${data[4][10]}</td>
+                                </tr>
+                                <tr>
+                                    <th>11</th>
+                                    <td>${data[0][11]}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>`
+                slide_1_cont.innerHTML = componentMobile
+                const currentColumn = slide_1_cont.querySelectorAll(`table:nth-child(${day+1}) tbody tr td`)
+                const tableSlider = slide_1_cont.querySelector('.table_slider')
+                if(day < 5 && day > -1){
+                    for(i = 0; i < currentColumn.length; i++){
+                        currentColumn[i].classList.add('current_day')
                     }
-                })
+                    tableSlider.style.cssText = `transform: translateX(calc(-20% * ${day}));`
+                } else{
+                    slide_1_cont.querySelector('nav span').classList.add('active_day')
+                }
+                    
+                const tableNav = slide_1_cont.querySelectorAll('nav span')
+                for(let i = 0; i < tableNav.length; i++){
+                    tableNav[i].addEventListener('click', ()=>{
+                        if(!tableNav[i].classList.contains('active_day')){
+                            if(slide_1_cont.querySelector('nav .active_day')){
+                                const activeDay = slide_1_cont.querySelector('nav .active_day')
+                                activeDay.classList.remove('active_day')
+                                tableNav[i].classList.add('active_day')
+                                //
+                                tableSlider.style.cssText = `transform: translateX(calc(-20% * ${i}))`
+                            } else{
+                                tableNav[i].classList.add('active_day')
+                                //
+                                tableSlider.style.cssText = `transform: translateX(calc(-20% * ${i}))`
+                            }
+                        }
+                    })
+                }
             }
+
         }
     }
 }

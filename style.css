@@ -381,7 +381,7 @@ body{
     display: inline-block;
     letter-spacing: 2px;
     user-select: none;
-    transition: box-shadow 0.25s, background-color 0.6s;
+    transition: box-shadow 0.25s, background-color 0.50s;
     border-radius: 5px;
 }
 .burger_ul li a:hover{
@@ -389,9 +389,49 @@ body{
     background-color: #4fc2dcc0;
 }
 .burger_active a{
-    box-shadow: 0 0 20px #4fc3dc, 0 0 35px #4fc3dc;
-    background-color: #4fc2dc;
+    background: linear-gradient(90deg, rgba(255,103,104,1) 0%, rgba(107,119,141,1) 50%, rgba(255,103,104,1) 100%);
+    animation: activeClass 1.8s cubic-bezier(0, 3.55, 0, 3.55) infinite;
 }
+
+@keyframes activeClass{
+    0%{
+        box-shadow: 0 0 8px #4fc3dc, 0 0 10px #4fc3dc, 0 0 24px #4fc3dc;
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 100%, #4fc3dc 100%);
+    }
+    5%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 90%, #4fc3dc 100%);}
+    10%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 80%, #4fc3dc 100%);}
+    15%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 70%, #4fc3dc 100%);}
+    20%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 60%, #4fc3dc 100%);}
+    25%{
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 50%, #4fc3dc 100%);
+        box-shadow: 0 0 8px #4fc3dc, 0 0 11px #4fc3dc, 0 0 24px #4fc2dcdd;
+    }
+    30%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 40%, #4fc3dc 100%);}
+    35%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 30%, #4fc3dc 100%);}
+    40%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 20%, #4fc3dc 100%);}
+    45%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 10%, #4fc3dc 100%);}
+    50%{
+        box-shadow: 0 0 8px #4fc3dc, 0 0 13px #4fc3dc, 0 0 24px #4fc2dcdd;
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 0%, #4fc3dc 100%);
+    }
+    55%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 10%, #4fc3dc 100%);}
+    60%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 20%, #4fc3dc 100%);}
+    65%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 30%, #4fc3dc 100%);}
+    70%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 40%, #4fc3dc 100%);}
+    75%{
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 50%, #4fc3dc 100%);
+        box-shadow: 0 0 8px #4fc3dc, 0 0 11px #4fc3dc, 0 0 24px #4fc2dcdd;
+    }
+    80%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 60%, #4fc3dc 100%);}
+    85%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 70%, #4fc3dc 100%);}
+    90%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 80%, #4fc3dc 100%);}
+    95%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 90%, #4fc3dc 100%);}
+    100%{
+        box-shadow: 0 0 8px #4fc3dc, 0 0 10px #4fc3dc, 0 0 24px #4fc2dc;
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 100%, #4fc3dc 100%);
+    }
+}
+
 
 /* Burger Desktop */
 
@@ -669,7 +709,7 @@ th{
     background-color: rgba(107,119,141,0.9);
 }
 .current_day{
-    background-color: rgba(38,56,89,0.91) !important;
+    background-color: rgba(38,56,89,0.91);
 }
 
 
@@ -702,7 +742,7 @@ th{
     }    
     .slide_1_container td{
         font-size: calc(var(--index)*1.4);
-        padding-left: 30px;
+        padding-left: 20px;
     }
     .slide_1_container th {
         font-size: calc(var(--index)*1.5);
