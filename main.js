@@ -66,6 +66,7 @@ document.fonts.onloadingdone = () => {
         loadScreen.style.display = 'none'
     }, 300)
 }
+alert(document.fonts.onloadingdone)
   
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
