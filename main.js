@@ -35,13 +35,13 @@ const burgerDesktop = document.querySelector('.burger_desktop')
 // Var App
 const slide_1_cont = document.querySelector('.slide_1_container')
 
-notifyMe()
+//notifyMe()
 function notifyMe() {
     if (!("Notification" in window)) {
-      // Check if the browser supports notifications
-      alert("Ваш браузер не поддерживает уведомления");
+        // Check if the browser supports notifications
+        alert("Ваш браузер не поддерживает уведомления");
     } else if (Notification.permission === "granted") {
-
+        
       const notification = new Notification("Ку хайп твое уже не первое уведомление");
     } else if (Notification.permission !== "denied") {
       Notification.requestPermission().then((permission) => {
@@ -58,8 +58,8 @@ function notifyMe() {
     firstOn.style.display = 'flex'
     firstOn.classList.add('welcome_visible')
 }*/
-document.fonts.onloadingdone = () => {
-    console.log('font-face load event')
+document.fonts.onloadingdone = (e) => {
+    console.log('font-face load event', e.fontfaces)
     const loadScreen = document.querySelector('.load_screen')
     loadScreen.style.opacity = '0'
     setTimeout(()=>{
@@ -67,10 +67,10 @@ document.fonts.onloadingdone = () => {
     }, 300)
 }
 alert(document.fonts.onloadingdone)
-  
+
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    const response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
+    const response = await fetch('http://localhost:5500/data/data_11.json')
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
