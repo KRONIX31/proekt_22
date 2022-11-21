@@ -250,12 +250,12 @@ body{
 .app{
     min-height: 100vh;
     background-image: url('Meteor.svg');
-    background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     position: relative;
     z-index: 1;
 }
+
 .app::before{
     content: '';
     background: rgba(6, 0, 0, 0.32);
@@ -374,7 +374,7 @@ body{
 .burger_ul li:not(:last-child){
     margin-bottom: 8px;
 }
-.burger_ul li a{
+.burger_ul li span{
     padding: 16px;
     text-decoration: none;
     color: #f0ffff;
@@ -383,12 +383,13 @@ body{
     user-select: none;
     transition: box-shadow 0.25s, background-color 0.50s;
     border-radius: 5px;
+    cursor: pointer;
 }
-.burger_ul li a:hover{
+.burger_ul li span:hover{
     box-shadow: 0 0 10px #4fc3dc, 0 0 30px #4fc3dc;
     background-color: #4fc2dcc0;
 }
-.burger_active a{
+.burger_active span{
     background: linear-gradient(90deg, rgba(255,103,104,1) 0%, rgba(107,119,141,1) 50%, rgba(255,103,104,1) 100%);
     animation: activeClass 1.8s cubic-bezier(0, 3.55, 0, 3.55) infinite;
 }
@@ -438,7 +439,7 @@ body{
 .burger_desktop{
     display: block;
     position: fixed;
-    width: calc(var(--index)*9.7);
+    width: 20vw;
     top: 0;
     right: 100%;
     background-color: #17223b;
@@ -686,6 +687,9 @@ th{
 .slide_1_container td:hover{
     color: rgb(35, 35, 35);
 }
+.slide_1_container td.current_day:hover{
+    color: #c1c1c1;
+}
 .slide_1_container td:hover::after{
     content: '';
     position: absolute;
@@ -711,6 +715,31 @@ th{
 .current_day{
     background-color: rgba(38,56,89,0.91);
 }
+.current_lesson{
+    position: relative;
+}
+.current_lesson div{
+    --percent: 50;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--percent)* 1%);
+    height: 100%;
+    background-image: repeating-linear-gradient(-45deg, #e1ff0030, #e1ff0030 10px, transparent 10px, transparent 32px);
+    background-size: 90px 90px;
+    animation: current_lesson 5s linear infinite;
+}
+@keyframes current_lesson{
+    from{
+        background-position: 0 0 ;
+    }
+    to{
+        background-position: 90px 90px;
+    }
+}
+
+
+
 
 
 
@@ -723,7 +752,7 @@ th{
         font-size: calc(var(--index)*1.45);
     }
 }
-@media screen and (max-width: 640px){
+@media screen and (max-width: 640px){ /* MOBILE */
     .header_num_class{
         padding: 4px 7px;
     }

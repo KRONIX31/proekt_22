@@ -2,6 +2,7 @@ const days = ['Воскресенье', 'Понедельник', 'Вторни�
 todayYear = new Date().getFullYear()
 todayMonth = new Date().getMonth()
 todayDay = new Date().getDate()
+let localObject = {}
 const timetable = [
 [new Date(todayYear, todayMonth, todayDay, 8, 30), new Date(todayYear, todayMonth, todayDay, 9, 10)],
 [new Date(todayYear, todayMonth, todayDay, 9, 15), new Date(todayYear, todayMonth, todayDay, 9, 55)],
@@ -15,6 +16,7 @@ const timetable = [
 [new Date(todayYear, todayMonth, todayDay, 15, 15), new Date(todayYear, todayMonth, todayDay, 15, 55)],
 [new Date(todayYear, todayMonth, todayDay, 16, 0), new Date(todayYear, todayMonth, todayDay, 16, 40)]
 ]
+console.log(todayYear, todayMonth, todayDay)
 
 let response, data
 const day = new Date().getDay() - 1
@@ -32,23 +34,32 @@ const headerNumClass_p = document.querySelector('.header_num_class p')
 const burgerMobile = document.querySelector('.burger_mobile')
 const burgerMobileClose_img = document.querySelector('.burger_mobile_header img')
 const burgerDesktop = document.querySelector('.burger_desktop')
+const burgerUl = document.querySelectorAll('.burger_ul')
 // Var App
 const slide_1_cont = document.querySelector('.slide_1_container')
 
-//notifyMe()
-function notifyMe() {
-    if (!("Notification" in window)) {
-        // Check if the browser supports notifications
-        alert("Ваш браузер не поддерживает уведомления");
-    } else if (Notification.permission === "granted") {
-        
-      const notification = new Notification("Ку хайп твое уже не первое уведомление");
-    } else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          const notification = new Notification("уведомления включены");
-        }
-      })
+if(localStorage.getItem('localObject')){
+    localObject = JSON.parse(localStorage.getItem('localObject'))
+} else{
+    localObject.class = '11'
+    localStorage.setItem('localObject', JSON.stringify(localObject))
+}
+function spanAddListener(){
+    burgerUl.forEach(ul => {   
+        ul.querySelectorAll('span').forEach(span => {
+            span.addEventListener('click', chooseClass)
+        })
+    })
+}
+function chooseClass(e){
+    const span = e.target
+    if(!span.parentElement.classList.contains('burger_active')){
+        const activeLi = span.parentElement.parentElement.querySelector('.burger_active')
+        span.parentElement.classList.add('burger_active')
+        activeLi.classList.remove('burger_active')
+        localObject.class = `${span.innerText.split(' ')[0]}`
+        localStorage.setItem('localObject', JSON.stringify(localObject))
+        console.log(localObject, span.innerText.split(' ')[0])
     }
 }
 
@@ -59,18 +70,18 @@ function notifyMe() {
     firstOn.classList.add('welcome_visible')
 }*/
 document.fonts.onloadingdone = (e) => {
-    console.log('font-face load event', e.fontfaces)
+    console.log('font-face load event')
     const loadScreen = document.querySelector('.load_screen')
     loadScreen.style.opacity = '0'
     setTimeout(()=>{
         loadScreen.style.display = 'none'
     }, 300)
 }
-alert("Notification" in window)
 
 document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    const response = await fetch('https://kronix31.github.io/proekt_22/data/data_11.json')
+    spanAddListener()
+    const response = await fetch(`https://kronix31.github.io/proekt_22/data/data_${localObject.class}.json`)
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
@@ -96,91 +107,91 @@ async function getdata(){
         <tbody>
             <tr> <!-- 1 -->
                 <th>1</th>
-                <td>${data[0][1]}</td>
-                <td>${data[1][1]}</td>
-                <td>${data[2][1]}</td>
-                <td>${data[3][1]}</td>
-                <td>${data[4][1]}</td>
+                <td class="current_lesson">${data[0][1]}<div></div></td>
+                <td>${data[1][1]}<div></div></td>
+                <td>${data[2][1]}<div></div></td>
+                <td>${data[3][1]}<div></div></td>
+                <td>${data[4][1]}<div></div></td>
             </tr>
             <tr> <!-- 2 -->
                 <th>2</th>
-                <td>${data[0][2]}</td>
-                <td>${data[1][2]}</td>
-                <td>${data[2][2]}</td>
-                <td>${data[3][2]}</td>
-                <td>${data[4][2]}</td>
+                <td>${data[0][2]}<div></div></td>
+                <td>${data[1][2]}<div></div></td>
+                <td>${data[2][2]}<div></div></td>
+                <td>${data[3][2]}<div></div></td>
+                <td>${data[4][2]}<div></div></td>
             </tr>
             <tr> <!-- 3 -->
                 <th>3</th>
-                <td>${data[0][3]}</td>
-                <td>${data[1][3]}</td>
-                <td>${data[2][3]}</td>
-                <td>${data[3][3]}</td>
-                <td>${data[4][3]}</td>
+                <td>${data[0][3]}<div></div></td>
+                <td>${data[1][3]}<div></div></td>
+                <td>${data[2][3]}<div></div></td>
+                <td>${data[3][3]}<div></div></td>
+                <td>${data[4][3]}<div></div></td>
             </tr>
             <tr> <!-- 4 -->
                 <th>4</th>
-                <td>${data[0][4]}</td>
-                <td>${data[1][4]}</td>
-                <td>${data[2][4]}</dh>
-                <td>${data[3][4]}</td>
-                <td>${data[4][4]}</td>
+                <td>${data[0][4]}<div></div></td>
+                <td>${data[1][4]}<div></div></td>
+                <td>${data[2][4]}<div></div></dh>
+                <td>${data[3][4]}<div></div></td>
+                <td>${data[4][4]}<div></div></td>
             </tr>
             <tr> <!-- 5 -->
                 <th>5</th>
-                <td>${data[0][5]}</td>
-                <td>${data[1][5]}</td>
-                <td>${data[2][5]}</td>
-                <td>${data[3][5]}</td>
-                <td>${data[4][5]}</td>
+                <td>${data[0][5]}<div></div></td>
+                <td>${data[1][5]}<div></div></td>
+                <td>${data[2][5]}<div></div></td>
+                <td>${data[3][5]}<div></div></td>
+                <td>${data[4][5]}<div></div></td>
             </tr>
             <tr> <!-- 6 -->
                 <th>6</th>
-                <td>${data[0][6]}</td>
-                <td>${data[1][6]}</td>
-                <td>${data[2][6]}</td>
-                <td>${data[3][6]}</td>
-                <td>${data[4][6]}</td>
+                <td>${data[0][6]}<div></div></td>
+                <td>${data[1][6]}<div></div></td>
+                <td>${data[2][6]}<div></div></td>
+                <td>${data[3][6]}<div></div></td>
+                <td>${data[4][6]}<div></div></td>
             </tr>
             <tr> <!-- 7 -->
                 <th>7</th>
-                <td>${data[0][7]}</td>
-                <td>${data[1][7]}</td>
-                <td>${data[2][7]}</td>
-                <td>${data[3][7]}</td>
-                <td>${data[4][7]}</td>
+                <td>${data[0][7]}<div></div></td>
+                <td>${data[1][7]}<div></div></td>
+                <td>${data[2][7]}<div></div></td>
+                <td>${data[3][7]}<div></div></td>
+                <td>${data[4][7]}<div></div></td>
             </tr>
             <tr> <!-- 8 -->
                 <th>8</th>
-                <td>${data[0][8]}</td>
-                <td>${data[1][8]}</td>
-                <td>${data[2][8]}</td>
-                <td>${data[3][8]}</td>
-                <td>${data[4][8]}</td>
+                <td>${data[0][8]}<div></div></td>
+                <td>${data[1][8]}<div></div></td>
+                <td>${data[2][8]}<div></div></td>
+                <td>${data[3][8]}<div></div></td>
+                <td>${data[4][8]}<div></div></td>
             </tr>
             <tr> <!-- 9 -->
                 <th>9</th>
-                <td>${data[0][9]}</td>
-                <td>${data[1][9]}</td>
-                <td>${data[2][9]}</td>
-                <td>${data[3][9]}</td>
-                <td>${data[4][9]}</td>
+                <td>${data[0][9]}<div></div></td>
+                <td>${data[1][9]}<div></div></td>
+                <td>${data[2][9]}<div></div></td>
+                <td>${data[3][9]}<div></div></td>
+                <td>${data[4][9]}<div></div></td>
             </tr>
             <tr> <!-- 10 -->
                 <th>10</th>
-                <td>${data[0][10]}</td>
-                <td>${data[1][10]}</td>
-                <td>${data[2][10]}</td>
-                <td>${data[3][10]}</td>
-                <td>${data[4][10]}</td>
+                <td>${data[0][10]}<div></div></td>
+                <td>${data[1][10]}<div></div></td>
+                <td>${data[2][10]}<div></div></td>
+                <td>${data[3][10]}<div></div></td>
+                <td>${data[4][10]}<div></div></td>
             </tr>
             <tr> <!-- 11 -->
             <th>11</th>
-            <td>${data[0][11]}</td>
-            <td>${data[1][11]}</td>
-            <td>${data[2][11]}</td>
-            <td>${data[3][11]}</td>
-            <td>${data[4][11]}</td>
+            <td>${data[0][11]}<div></div></td>
+            <td>${data[1][11]}<div></div></td>
+            <td>${data[2][11]}<div></div></td>
+            <td>${data[3][11]}<div></div></td>
+            <td>${data[4][11]}<div></div></td>
         </tr>
         </tbody>
             </table>`
@@ -197,8 +208,7 @@ async function getdata(){
                     if(hours <= timetable[0][0]){
                         
                     }
-                    //console.log(time.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
-                }, 10000)
+                }, 1500)
             }
         } else{ // Mobile Table
 
@@ -223,47 +233,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td>${data[0][1]}</td>
+                                    <td class="current_lesson"><div></div>${data[0][1]}</td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td>${data[0][2]}</td>
+                                    <td><div></div>${data[0][2]}</td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td>${data[0][3]}</td>
+                                    <td><div></div>${data[0][3]}</td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td>${data[0][4]}</td>
+                                    <td><div></div>${data[0][4]}</td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td>${data[0][5]}</td>
+                                    <td><div></div>${data[0][5]}</td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td>${data[0][6]}</td>
+                                    <td><div></div>${data[0][6]}</td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td>${data[0][7]}</td>
+                                    <td><div></div>${data[0][7]}</td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td>${data[0][8]}</td>
+                                    <td><div></div>${data[0][8]}</td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td>${data[0][9]}</td>
+                                    <td><div></div>${data[0][9]}</td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td>${data[0][10]}</td>
+                                    <td><div></div>${data[0][10]}</td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td>${data[0][11]}</td>
+                                    <td><div></div>${data[0][11]}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -277,47 +287,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td>${data[1][1]}</td>
+                                    <td><div></div>${data[1][1]}</td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td>${data[1][2]}</td>
+                                    <td><div></div>${data[1][2]}</td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td>${data[1][3]}</td>
+                                    <td><div></div>${data[1][3]}</td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td>${data[1][4]}</td>
+                                    <td><div></div>${data[1][4]}</td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td>${data[1][5]}</td>
+                                    <td><div></div>${data[1][5]}</td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td>${data[1][6]}</td>
+                                    <td><div></div>${data[1][6]}</td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td>${data[1][7]}</td>
+                                    <td><div></div>${data[1][7]}</td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td>${data[1][8]}</td>
+                                    <td><div></div>${data[1][8]}</td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td>${data[1][9]}</td>
+                                    <td><div></div>${data[1][9]}</td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td>${data[1][10]}</td>
+                                    <td><div></div>${data[1][10]}</td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td>${data[0][11]}</td>
+                                    <td><div></div>${data[0][11]}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -331,47 +341,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td>${data[2][1]}</td>
+                                    <td><div></div>${data[2][1]}</td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td>${data[2][2]}</td>
+                                    <td><div></div>${data[2][2]}</td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td>${data[2][3]}</td>
+                                    <td><div></div>${data[2][3]}</td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td>${data[2][4]}</td>
+                                    <td><div></div>${data[2][4]}</td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td>${data[2][5]}</td>
+                                    <td><div></div>${data[2][5]}</td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td>${data[2][6]}</td>
+                                    <td><div></div>${data[2][6]}</td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td>${data[2][7]}</td>
+                                    <td><div></div>${data[2][7]}</td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td>${data[2][8]}</td>
+                                    <td><div></div>${data[2][8]}</td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td>${data[2][9]}</td>
+                                    <td><div></div>${data[2][9]}</td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td>${data[2][10]}</td>
+                                    <td><div></div>${data[2][10]}</td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td>${data[0][11]}</td>
+                                    <td><div></div>${data[0][11]}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -385,47 +395,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td>${data[3][1]}</td>
+                                    <td><div></div>${data[3][1]}</td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td>${data[3][2]}</td>
+                                    <td><div></div>${data[3][2]}</td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td>${data[3][3]}</td>
+                                    <td><div></div>${data[3][3]}</td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td>${data[3][4]}</td>
+                                    <td><div></div>${data[3][4]}</td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td>${data[3][5]}</td>
+                                    <td><div></div>${data[3][5]}</td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td>${data[3][6]}</td>
+                                    <td><div></div>${data[3][6]}</td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td>${data[3][7]}</td>
+                                    <td><div></div>${data[3][7]}</td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td>${data[3][8]}</td>
+                                    <td><div></div>${data[3][8]}</td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td>${data[3][9]}</td>
+                                    <td><div></div>${data[3][9]}</td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td>${data[3][10]}</td>
+                                    <td><div></div>${data[3][10]}</td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td>${data[0][11]}</td>
+                                    <td><div></div>${data[0][11]}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -439,47 +449,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td>${data[4][1]}</td>
+                                    <td><div></div>${data[4][1]}</td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td>${data[4][2]}</td>
+                                    <td><div></div>${data[4][2]}</td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td>${data[4][3]}</td>
+                                    <td><div></div>${data[4][3]}</td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td>${data[4][4]}</td>
+                                    <td><div></div>${data[4][4]}</td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td>${data[4][5]}</td>
+                                    <td><div></div>${data[4][5]}</td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td>${data[4][6]}</td>
+                                    <td><div></div>${data[4][6]}</td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td>${data[4][7]}</td>
+                                    <td><div></div>${data[4][7]}</td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td>${data[4][8]}</td>
+                                    <td><div></div>${data[4][8]}</td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td>${data[4][9]}</td>
+                                    <td><div></div>${data[4][9]}</td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td>${data[4][10]}</td>
+                                    <td><div></div>${data[4][10]}</td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td>${data[0][11]}</td>
+                                    <td><div></div>${data[0][11]}</td>
                                 </tr>
                             </tbody>
                         </table>
