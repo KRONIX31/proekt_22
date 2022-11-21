@@ -18,7 +18,7 @@ const timetable = [
 ]
 console.log(todayYear, todayMonth, todayDay)
 
-let response, data
+let response, data, propysk
 const day = new Date().getDay() - 1
 // Var DIALOG
 /*const dialogText = document.querySelector('.dialog_text')
@@ -44,22 +44,43 @@ if(localStorage.getItem('localObject')){
     localObject.class = '11'
     localStorage.setItem('localObject', JSON.stringify(localObject))
 }
+document.addEventListener('DOMContentLoaded', DOMLoaded)
+function DOMLoaded(){
+    spanAddListener()
+    getdata()
+}
 function spanAddListener(){
-    burgerUl.forEach(ul => {   
+    burgerUl.forEach(ul => {
         ul.querySelectorAll('span').forEach(span => {
             span.addEventListener('click', chooseClass)
         })
+        ul.querySelector(`li:nth-child(${localObject.class})`).classList.add('burger_active')
+        headerNumClass_p.innerHTML = `${localObject.class} класс`
     })
 }
 function chooseClass(e){
     const span = e.target
     if(!span.parentElement.classList.contains('burger_active')){
-        const activeLi = span.parentElement.parentElement.querySelector('.burger_active')
-        span.parentElement.classList.add('burger_active')
-        activeLi.classList.remove('burger_active')
-        localObject.class = `${span.innerText.split(' ')[0]}`
+        const spanText = span.innerText.split(' ')[0]
+        headerNumClass_p.innerHTML = `${spanText} класс`
+        burgerUl.forEach(ul => {
+            const activeLi = ul.querySelector('.burger_active')
+            activeLi.classList.remove('burger_active')
+            ul.querySelector(`li:nth-child(${spanText})`).classList.add('burger_active')
+        })
+        localObject.class = `${spanText}`
         localStorage.setItem('localObject', JSON.stringify(localObject))
-        console.log(localObject, span.innerText.split(' ')[0])
+        console.log(localObject)
+        getdata()
+        propysk = true
+        setTimeout(()=>{
+            burgerDesktop.style.cssText = `transform: translateX(0px);
+            opacity: 0;`
+            burgerMobile.classList.remove('burger_mobile_open')
+            setTimeout(()=>{
+                burgerMobile.style.display = 'none'
+            }, 240)
+        }, 100)
     }
 }
 
@@ -78,9 +99,7 @@ document.fonts.onloadingdone = (e) => {
     }, 300)
 }
 
-document.addEventListener('DOMContentLoaded', getdata)
 async function getdata(){
-    spanAddListener()
     const response = await fetch(`https://kronix31.github.io/proekt_22/data/data_${localObject.class}.json`)
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
@@ -212,7 +231,8 @@ async function getdata(){
             }
         } else{ // Mobile Table
 
-            if(!slide_1_cont.querySelector('nav')){
+            if(!slide_1_cont.querySelector('nav') || propysk){
+                propysk = false
                 const componentMobile = `
                 <nav class="table_nav">
                     <span${day == 0? ' class="active_day"': ''}>Понедельник</span>
