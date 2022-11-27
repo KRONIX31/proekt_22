@@ -42,7 +42,9 @@ table {
 	border-spacing: 0px;
 }
 
+
 /*        */
+
 
 
 @font-face{
@@ -52,23 +54,33 @@ table {
 :root{
     --index: calc(1vw + 1vh)
 }
-.first_on{
+body{
+    background-color: #08001b;
+}
+.main{
+    font-family: 'myfont';
+}
+/*.first_on{
     position: fixed;
     top: 0;
     left: 0;
     display: none;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-end;
+    align-items: center;
     background-color: rgba(0, 0, 0, 0.85);
     width: 100vw;
     height: 100vh;
     transition: opacity 0.4s;
     opacity: 0;
     z-index: 20;
+    overflow: hidden;
+    padding-right: 100px;
 }
 .bubbles{
     position: absolute;
     display: flex;
+    top: 0;
+    left: 0;
     opacity: 0.6;
     justify-content: space-evenly;
     width: 100%;
@@ -102,20 +114,18 @@ table {
 }
 .dialog_wrapper{
     padding: calc(var(--index)*0.4);
-    background-color: #f0ffff;
+    background-color: #17223b;
     display: flex;
     gap: 20px;
-    margin-top: 100px;
     position: relative;
     z-index: 4;
 }
 .dialog_first_block{
     transition: background-color 0.3s;
-    position: relative;
     z-index: 3;
 }
 .dialog_text{
-    font-size: calc(var(--index)*2.2);
+    font-size: calc(var(--index)*2);
     font-weight: bold;
     cursor: pointer;
     text-align: left;
@@ -124,29 +134,27 @@ table {
     border-radius: 2px;
     display: flex;
     align-items: center;
+    color: #f2eded;
 }
 .dialog_text div:first-child{
-    background-color: #fff;
     padding: 6px 6px 6px 6px;
     transition: background-color 0.3s;
 }
 .dialog_active{
-    background-color: rgb(240, 240, 240) !important;
+
 }
 .icon_wrapper{
     display: flex;
     padding-right: 7px;
 }
 .icon_img_active{
-    transform: rotate(0deg) !important;
-    padding-right: 0 !important;
-    padding-left: calc(var(--index)*0.3);
+    transform: rotate(90deg) !important;
 }
 .dialog_text img{
-    padding-right: calc(var(--index)*0.3);
-    width: calc(var(--index)*1.2);
-    transform: rotate(180deg);
+    width: calc(var(--index)*1);
+    transform: rotate(-90deg);
     transition: transform 0.3s;
+    filter: invert(100%);
 }
 
 
@@ -154,19 +162,20 @@ table {
     font-size: calc(var(--index)*1.7);
     display: block;
     position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: rgb(240, 240, 240);
+    right: 100%;
+    top: 50%;
+    background-color: #17223b;
     width: 100%;
     border-radius: 0 0 5px 5px;
-    transform: rotate3d(1, 0, 0, 90deg);
+    transform: rotate3d(1, 0, 0, 90deg) translateY(-50%);
     opacity: 0;
     transition: opacity 0.3s, transform 0.3s;
     transform-origin: center top;
+    color: #f2eded;
 }
 .dialog_ul_active{
     opacity: 1;
-    transform: rotate3d(1, 0, 0, 0deg);
+    transform: rotate3d(1, 0, 0, 0deg) translateY(-50%);
 }
 .dialog_ul li{
     padding: 6px;
@@ -175,7 +184,7 @@ table {
     transition: background-color 0.25s;
 }
 .dialog_ul li:hover{
-    background-color: #f0ffff;
+    background-color: rgba(240, 255, 255, 0.163);
 }
 
 
@@ -190,7 +199,7 @@ table {
     border: none;
     cursor: pointer;
     font-size: calc(var(--index)*1.2);
-    font-weight: 400;
+    font-weight: 600;
     transition: background-color 0.3s;
     user-select: none;
     height: 100%;
@@ -206,20 +215,47 @@ table {
     height: 100%;
     width: 100%;
     z-index: 1;
+}*/
+
+
+.load_screen{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #08001b;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    transition: 0.3s opacity;
 }
-
-
-
+.load_screen div{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border-top: 8px solid #ff6767;
+    border-right: 8px solid #17223b;
+    border-bottom: 8px solid #263859;
+    border-left: 8px solid #6b778d;
+    animation: looprotate 1.4s linear infinite;
+}
+@keyframes looprotate{
+    100%{
+        transform: rotate3d(0, 0, 1, 360deg)
+    }
+}
 .app{
     min-height: 100vh;
     background-image: url('Meteor.svg');
-    background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     position: relative;
-    font-family: 'myfont';
     z-index: 1;
 }
+
 .app::before{
     content: '';
     background: rgba(6, 0, 0, 0.32);
@@ -239,6 +275,7 @@ table {
     align-items: center;
     width: 100%;
     background-color: #08001b;
+    background-image: url(AnimatedShape.svg);
     height: 80px;
     padding: 11px 22px;
     font-size: calc(var(--index)*1.1);
@@ -255,7 +292,7 @@ table {
     width: 100%;
     height: 4px;
     background: linear-gradient(to right, transparent, #1779ff, transparent);
-    animation: neon 8s linear infinite;
+    animation: neon 10s linear infinite;
 }
 @keyframes neon{
     0%{
@@ -337,31 +374,72 @@ table {
 .burger_ul li:not(:last-child){
     margin-bottom: 8px;
 }
-.burger_ul li a{
-    padding: 16px;
+.burger_ul li span{
+    padding: 14px;
     text-decoration: none;
     color: #f0ffff;
     display: inline-block;
     letter-spacing: 2px;
     user-select: none;
-    transition: box-shadow 0.25s, background-color 0.6s;
+    transition: box-shadow 0.25s, background-color 0.50s;
     border-radius: 5px;
+    cursor: pointer;
 }
-.burger_ul li a:hover{
+.burger_ul li span:hover{
     box-shadow: 0 0 10px #4fc3dc, 0 0 30px #4fc3dc;
     background-color: #4fc2dcc0;
 }
-.burger_active a{
-    box-shadow: 0 0 20px #4fc3dc, 0 0 35px #4fc3dc;
-    background-color: #4fc2dc;
+.burger_active span{
+    background: linear-gradient(90deg, rgba(255,103,104,1) 0%, rgba(107,119,141,1) 50%, rgba(255,103,104,1) 100%);
+    animation: activeClass 1.8s cubic-bezier(0, 3.55, 0, 3.55) infinite;
 }
+
+@keyframes activeClass{
+    0%{
+        box-shadow: 0 0 8px #4fc3dc, 0 0 10px #4fc3dc, 0 0 24px #4fc3dc;
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 100%, #4fc3dc 100%);
+    }
+    5%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 90%, #4fc3dc 100%);}
+    10%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 80%, #4fc3dc 100%);}
+    15%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 70%, #4fc3dc 100%);}
+    20%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 60%, #4fc3dc 100%);}
+    25%{
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 50%, #4fc3dc 100%);
+        box-shadow: 0 0 8px #4fc3dc, 0 0 11px #4fc3dc, 0 0 24px #4fc2dcdd;
+    }
+    30%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 40%, #4fc3dc 100%);}
+    35%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 30%, #4fc3dc 100%);}
+    40%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 20%, #4fc3dc 100%);}
+    45%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 10%, #4fc3dc 100%);}
+    50%{
+        box-shadow: 0 0 8px #4fc3dc, 0 0 13px #4fc3dc, 0 0 24px #4fc2dcdd;
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 0%, #4fc3dc 100%);
+    }
+    55%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 10%, #4fc3dc 100%);}
+    60%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 20%, #4fc3dc 100%);}
+    65%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 30%, #4fc3dc 100%);}
+    70%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 40%, #4fc3dc 100%);}
+    75%{
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 50%, #4fc3dc 100%);
+        box-shadow: 0 0 8px #4fc3dc, 0 0 11px #4fc3dc, 0 0 24px #4fc2dcdd;
+    }
+    80%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 60%, #4fc3dc 100%);}
+    85%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 70%, #4fc3dc 100%);}
+    90%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 80%, #4fc3dc 100%);}
+    95%{background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 90%, #4fc3dc 100%);}
+    100%{
+        box-shadow: 0 0 8px #4fc3dc, 0 0 10px #4fc3dc, 0 0 24px #4fc2dc;
+        background: linear-gradient(135deg, #4fc3dc 0%, #d8d8d8 100%, #4fc3dc 100%);
+    }
+}
+
 
 /* Burger Desktop */
 
 .burger_desktop{
     display: block;
     position: fixed;
-    width: calc(var(--index)*9.7);
+    width: 20vw;
     top: 0;
     right: 100%;
     background-color: #17223b;
@@ -594,7 +672,7 @@ th{
     border-collapse: separate; 
     border: 5px dashed #ff6767a6;
     border-left-width: 0px;
-    border-radius: 4px;
+    border-radius: 20px;
     overflow: hidden;
 }
 .slide_1_container th{
@@ -608,6 +686,9 @@ th{
 }
 .slide_1_container td:hover{
     color: rgb(35, 35, 35);
+}
+.slide_1_container td.current_day:hover{
+    color: #c1c1c1;
 }
 .slide_1_container td:hover::after{
     content: '';
@@ -632,8 +713,33 @@ th{
     background-color: rgba(107,119,141,0.9);
 }
 .current_day{
-    background-color: rgba(38,56,89,0.91) !important;
+    background-color: rgba(38,56,89,0.91);
 }
+.current_lesson{
+    position: relative;
+}
+.current_lesson div{
+    --percent: 50;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--percent)* 1%);
+    height: 100%;
+    background-image: repeating-linear-gradient(-45deg, #e1ff0030, #e1ff0030 10px, transparent 10px, transparent 32px);
+    background-size: 90px 90px;
+    animation: current_lesson 5s linear infinite;
+}
+@keyframes current_lesson{
+    from{
+        background-position: 0 0 ;
+    }
+    to{
+        background-position: 90px 90px;
+    }
+}
+
+
+
 
 
 
@@ -646,13 +752,26 @@ th{
         font-size: calc(var(--index)*1.45);
     }
 }
-@media screen and (max-width: 640px){
+@media screen and (max-width: 640px){ /* MOBILE */
+    .header_num_class{
+        padding: 4px 7px;
+    }
+    .header_num_class p {
+        display: none;
+    }
+    .header_num_class img{
+        display: block;
+    }
+    .burger_desktop{
+        transform: translateX(0%) !important;
+    }
+
     .slide_1_container {
         padding: 10px 15px;
     }    
     .slide_1_container td{
         font-size: calc(var(--index)*1.4);
-        padding-left: 30px;
+        padding-left: 20px;
     }
     .slide_1_container th {
         font-size: calc(var(--index)*1.5);
@@ -664,14 +783,5 @@ th{
 @media screen and (max-width: 560px){
     .bubbles{
         width: auto;
-    }
-    .header_num_class{
-        padding: 4px 7px;
-    }
-    .header_num_class p {
-        display: none;
-    }
-    .header_num_class img{
-        display: block;
     }
 }
