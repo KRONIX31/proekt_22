@@ -232,6 +232,10 @@ body{
     perspective: 1000px;
     transition: 0.3s opacity;
 }
+.slide_1_container .load_screen{
+    background-color: transparent;
+    height: 100%;
+}
 .load_screen div{
     width: 90px;
     height: 90px;
@@ -630,7 +634,13 @@ body{
     width: 50%;
 }
 .slide_1_container{
+    min-height: 400px;
     padding: 15px 30px;
+    position: relative;
+}
+.error_message{
+    color:rgb(228, 228, 228);
+    font-size: 25px;
 }
 .table_nav{
     display: none;

@@ -37,6 +37,7 @@ const burgerDesktop = document.querySelector('.burger_desktop')
 const burgerUl = document.querySelectorAll('.burger_ul')
 // Var App
 const slide_1_cont = document.querySelector('.slide_1_container')
+const loadScreen = document.querySelector('.load_screen')
 
 if(localStorage.getItem('localObject')){
     localObject = JSON.parse(localStorage.getItem('localObject'))
@@ -60,12 +61,13 @@ function spanAddListener(){
     })
 }
 function chooseClass(e){
+    slide_1_cont.innerHTML = `<div class="load_screen"><div></div></div>`
     const span = e.target
     if(!span.parentElement.classList.contains('burger_active')){
         let spanText = span.innerText
         let spanNum = span.dataset.class
+        console.log(spanNum, spanText)
 
-        console.log(span.dataset.class, spanText)
         headerNumClass_p.innerHTML = `${spanText}`
         burgerUl.forEach(ul => {
             const activeLi = ul.querySelector('.burger_active')
@@ -73,8 +75,8 @@ function chooseClass(e){
             ul.querySelector(`li:nth-child(${spanNum})`).classList.add('burger_active')
         })
         localObject.class = `${spanNum}`
+        localObject.classText = `${spanText}`
         localStorage.setItem('localObject', JSON.stringify(localObject))
-        console.log(localObject)
         getdata()
         propysk = true
         setTimeout(()=>{
@@ -84,7 +86,7 @@ function chooseClass(e){
             setTimeout(()=>{
                 burgerMobile.style.display = 'none'
             }, 240)
-        }, 100)
+        }, 60)
     }
 }
 
@@ -96,7 +98,6 @@ function chooseClass(e){
 }*/
 document.fonts.onloadingdone = (e) => {
     console.log('font-face load event')
-    const loadScreen = document.querySelector('.load_screen')
     loadScreen.style.opacity = '0'
     setTimeout(()=>{
         loadScreen.style.display = 'none'
@@ -107,10 +108,15 @@ async function getdata(){
     const response = await fetch(`https://kronix31.github.io/proekt_22/data/data_${localObject.class}.json`)
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+        throw new (message);
     }
-    data = await response.json()
+    data = await response.json().catch((message)=>{
+        slide_1_cont.innerHTML = `<p class="error_message">${message}</p>`
+        console.warn(message)
+        return false
+    })
     console.log(data)
+    if(!data){return}
 
     window.onresize = render
     render()
@@ -224,14 +230,6 @@ async function getdata(){
                 for(i = 0; i < currentCell.length; i+=5){
                     currentCell[i + day].classList.add('current_day')
                 }
-                setInterval(()=>{
-                    let time = new Date()
-                    let hours = time.getHours()
-                    let minutes = time.getMinutes()
-                    if(hours <= timetable[0][0]){
-                        
-                    }
-                }, 1500)
             }
         } else{ // Mobile Table
 
