@@ -231,6 +231,7 @@ body{
     align-items: center;
     perspective: 1000px;
     transition: 0.3s opacity;
+    z-index: 5;
 }
 .slide_1_container .load_screen{
     background-color: transparent;
@@ -344,7 +345,7 @@ body{
     top: 0;
     left: 0;
     background-color: #000000ef;
-    z-index: 3;
+    z-index: 30;
     opacity: 0;
     display: none;
     cursor: default;
@@ -450,7 +451,7 @@ body{
     height: 100%;
     opacity: 0;
     transition: transform 0.25s, opacity 0.25s;
-    z-index: 10;
+    z-index: 11;
 }
 .burger_desktop_wrapper{
     padding: 30px 0;
@@ -678,7 +679,7 @@ th{
 }
 .slide_1_container table{
     width: 100%;
-    color: #ffffffef;
+    color: #f3f3f3;
     border-collapse: separate; 
     border: 5px dashed #ff6767a6;
     border-left-width: 0px;
@@ -700,6 +701,10 @@ th{
 .slide_1_container td.current_day:hover{
     color: #c1c1c1;
 }
+.slide_1_container td span{
+    position: relative;
+    z-index: 10;
+}
 .slide_1_container td:hover::after{
     content: '';
     position: absolute;
@@ -718,26 +723,33 @@ th{
 .slide_1_container th, .slide_1_container td{
     padding: 10px;
 }
+.slide_1_container th:not(:last-child):not(:first-child), .slide_1_container td:not(:last-child):not(:first-child){
+    border-right: 1px solid rgba(0, 0, 0, 0.16)
+}
 
 .slide_1_container tbody tr{
     background-color: rgba(107,119,141,0.9);
 }
 .current_day{
-    background-color: rgba(38,56,89,0.91);
+    background-color: rgba(38,56,89,0.72);
 }
 .current_lesson{
-    position: relative;
+    text-align: center !important;
+    background-color: rgba(38, 56, 89, 0.9);
+}
+.current_lesson_span{
+    color: rgb(152, 255, 169);
 }
 .current_lesson div{
-    --percent: 50;
     position: absolute;
     top: 0;
     left: 0;
     width: calc(var(--percent)* 1%);
     height: 100%;
-    background-image: repeating-linear-gradient(-45deg, #e1ff0030, #e1ff0030 10px, transparent 10px, transparent 32px);
+    background-image: repeating-linear-gradient(-45deg, #ff676861, #ff676861 10px, transparent 10px, transparent 32px);
     background-size: 90px 90px;
     animation: current_lesson 5s linear infinite;
+    z-index: 2;
 }
 @keyframes current_lesson{
     from{
