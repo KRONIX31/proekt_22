@@ -281,11 +281,11 @@ body{
     width: 100%;
     background-color: #08001b;
     background-image: url(AnimatedShape.svg);
-    height: 80px;
+    height: 10%;
     padding: 11px 22px;
     font-size: calc(var(--index)*1.1);
     color: #f0ffff;
-    margin-bottom: 20px;
+    margin-bottom: 13px;
     position: relative;
     overflow: hidden;
 }
@@ -316,7 +316,7 @@ body{
     align-items: center;
     height: 100%;
     background-color: #263859;
-    padding: 5px 8px;
+    padding: calc(var(--index) * 0.58) calc(var(--index) * 0.3);
     cursor: pointer;
     text-align: center;
 }
@@ -334,6 +334,17 @@ body{
 }
 .header_num_class:hover img{
     filter: invert(0.8);
+}
+
+.current_information{
+    padding: calc(var(--index) * 0.3) calc(var(--index) * 0.5)
+}
+.full_date{
+    font-size: calc(var(--index)*0.95);
+    background-color: #17223b;
+    padding: calc(var(--index) * 0.32) calc(var(--index) * 0.29);
+    text-align: center;
+    width: min-content;
 }
 
 /* Burger Mobile */
@@ -721,7 +732,7 @@ th{
     transition: 0.1s;
 }
 .slide_1_container th, .slide_1_container td{
-    padding: 10px;
+    padding: 13px;
 }
 .slide_1_container th:not(:last-child):not(:first-child), .slide_1_container td:not(:last-child):not(:first-child){
     border-right: 1px solid rgba(0, 0, 0, 0.16)
@@ -773,6 +784,9 @@ th{
     .app_header{
         font-size: calc(var(--index)*1.45);
     }
+    .full_date{
+        font-size: calc(var(--index)*1.35);;
+    }
 }
 @media screen and (max-width: 640px){ /* MOBILE */
     .header_num_class{
@@ -793,10 +807,11 @@ th{
     }    
     .slide_1_container td{
         font-size: calc(var(--index)*1.4);
-        padding-left: 20px;
+        padding: 10px 10px 10px 20px;
     }
     .slide_1_container th {
         font-size: calc(var(--index)*1.5);
+        padding: 10px;
     }
     .table_nav{
         display: flex;

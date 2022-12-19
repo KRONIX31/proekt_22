@@ -27,6 +27,7 @@ const day = NOW.getDay() - 1
 const headerNumClass = document.querySelector('.header_num_class')
 const headerNumClass_p = document.querySelector('.header_num_class p')
 const headerInformation = document.querySelector('.current_information')
+const headerFullDate = document.querySelector('.full_date')
 const burgerMobile = document.querySelector('.burger_mobile')
 const burgerMobileClose_img = document.querySelector('.burger_mobile_header img')
 const burgerDesktop = document.querySelector('.burger_desktop')
@@ -44,7 +45,7 @@ if(localStorage.getItem('localObject')){
 }
 document.addEventListener('DOMContentLoaded', DOMLoaded)
 function DOMLoaded(){
-    interval = setInterval(timeUpdate, 2000)
+    interval = setInterval(timeUpdate, 1000)
     spanAddListener()
     getdata()
 }
@@ -87,17 +88,45 @@ function chooseClass(e){
     }
 }
 
-document.fonts.onloadingdone = (e) => {
-    console.log('font-face load event')
+
+function hideLoadingScreen(){
+    console.log('font-face load event or DomContentLoaded')
     loadScreen.style.opacity = '0'
     setTimeout(()=>{
         loadScreen.style.display = 'none'
     }, 300)
 }
+if(((/iPad|iPhone|iPod|Mac/.test(navigator.userAgent)) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+&& !window.MSStream){
+    //IOS
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hideLoadingScreen()
+        console.log('ios')
+    })
+} else{
+    //Все остальное
+    document.fonts.onloadingdone = () => {
+        hideLoadingScreen()
+        console.log('not ios')
+    }
+}
+
 
 function timeUpdate(){
     
     const date = new Date()
+    headerFullDate.innerText = date.toLocaleString()
+    //проверка на учебное время и день
+    if(date > timetable[10][1] || date < timetable[0][0] || date.getDay() == 0 || date.getDay() == 6){
+        const current_lesson_for_check = slide_1_cont.querySelector('.current_lesson')
+        const current_lesson_span_for_check = slide_1_cont.querySelector('.current_lesson_span')
+        if(current_lesson_for_check || current_lesson_span_for_check){
+            current_lesson_for_check.classList.remove('current_lesson')
+            current_lesson_span_for_check.classList.remove('current_lesson_span')
+        }
+        headerInformation.innerText = 'Сейчас не учебное время'
+        return 'не учебное время'
+    }
     timetable.forEach((element, index)=>{
 
         const currentLessons = slide_1_cont.querySelectorAll(`table .current_day`)
@@ -148,7 +177,7 @@ async function getdata(){
     })
     render()
     timeUpdate()
-    interval = setInterval(timeUpdate, 2000)
+    interval = setInterval(timeUpdate, 1000)
     function render(){
         if(window.innerWidth > 640){ // Desktop Table
             const componentDesktop = `<table>
