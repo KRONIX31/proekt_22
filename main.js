@@ -36,6 +36,7 @@ const burgerUl = document.querySelectorAll('.burger_ul')
 const slide_1_cont = document.querySelector('.slide_1_container')
 const loadScreen = document.querySelector('.load_screen')
 
+
 if(localStorage.getItem('localObject')){
     localObject = JSON.parse(localStorage.getItem('localObject'))
 } else{
@@ -111,11 +112,37 @@ if(((/iPad|iPhone|iPod|Mac/.test(navigator.userAgent)) || (navigator.platform ==
     }
 }
 
+function sklonenie(num, MinsOrSeconds) {
+    if(MinsOrSeconds === 'min'){
+        if(num % 10 == 1){
+            return `${num} минута`
+        } else{
+            if(num % 10 == 2 || num % 10 == 3 || num % 10 == 4){
+                return `${num} минуты`
+            } else{
+                return `${num} минут`
+            }
+        }
+    }
+    if(MinsOrSeconds === 'sec'){
+        if(num % 10 == 1){
+            return `${num} секунда`
+        } else{
+            if(num % 10 == 2 || num % 10 == 3 || num % 10 == 4){
+                return `${num} секунды`
+            } else{
+                return `${num} секунд`
+            }
+        }
+    }
+}
 
 function timeUpdate(){
     
     const date = new Date()
-    headerFullDate.innerText = date.toLocaleString()
+    headerFullDate.innerText = date.toLocaleString('ru-RU',{
+        year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
+    })
     //проверка на учебное время и день
     if(date > timetable[10][1] || date < timetable[0][0] || date.getDay() == 0 || date.getDay() == 6){
         const current_lesson_for_check = slide_1_cont.querySelector('.current_lesson')
@@ -127,6 +154,7 @@ function timeUpdate(){
         headerInformation.innerText = 'Сейчас не учебное время'
         return 'не учебное время'
     }
+
     timetable.forEach((element, index)=>{
 
         const currentLessons = slide_1_cont.querySelectorAll(`table .current_day`)
@@ -141,13 +169,18 @@ function timeUpdate(){
             currentLessons[lesson].classList.add('current_lesson')
             currentLessons[lesson].children[0].classList.add('current_lesson_span')
             slide_1_cont.querySelector('.current_lesson div').style.cssText = `--percent:${percent}`
+            ////////////////////////////
+            headerInformation.innerText = `До конца урока ${sklonenie(Math.round((timetable[index][1] - date)/1000/60), 'min')}`
 
         } else{
             if(timetable[index+1]){
                 if(element[1] < date && timetable[index+1][0] > date){
                     console.log('lkl', currentLessons[index])
-                    headerInformation.innerText = `Перемена еще ${Math.floor((timetable[index+1][0]-date)/1000/60)} минут
-                    ${(Math.floor(timetable[index+1][0]-date)/1000 % 60)} секунд`
+
+                    headerInformation.innerText = `До конца перемены
+                    ${sklonenie(Math.floor((timetable[index+1][0]-date)/1000/60), 'min')}
+                    ${sklonenie((Math.floor((timetable[index+1][0]-date)/1000 % 60)), 'sec')}`
+                    
                     currentLessons[index].classList.add('current_lesson')
                     currentLessons[index].children[1].style.cssText = `--percent: 100`
                 }

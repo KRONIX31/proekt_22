@@ -310,6 +310,7 @@ body{
 
 
 .header_num_class{
+    flex: 0 auto;
     font-weight: 500;
     display: flex;
     justify-content: center;
@@ -337,9 +338,12 @@ body{
 }
 
 .current_information{
-    padding: calc(var(--index) * 0.3) calc(var(--index) * 0.5)
+    flex: 3;
+    padding: calc(var(--index) * 0.3) calc(var(--index) * 0.5);
+    text-align: center;
 }
 .full_date{
+    flex: 1;
     font-size: calc(var(--index)*0.95);
     background-color: #17223b;
     padding: calc(var(--index) * 0.32) calc(var(--index) * 0.29);
@@ -673,6 +677,7 @@ body{
     transition: transform 0.5s ease;
 }
 .table_nav span{
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     padding: 8px 13px;
     cursor: pointer;
     background-color: rgba(255, 103, 103, 0.421);
@@ -783,6 +788,7 @@ th{
     }
     .app_header{
         font-size: calc(var(--index)*1.45);
+        padding: 10px 10px;
     }
     .full_date{
         font-size: calc(var(--index)*1.35);;
@@ -790,7 +796,7 @@ th{
 }
 @media screen and (max-width: 640px){ /* MOBILE */
     .header_num_class{
-        padding: 4px 7px;
+        padding: 3px 5px;
     }
     .header_num_class p {
         display: none;
@@ -800,6 +806,12 @@ th{
     }
     .burger_desktop{
         transform: translateX(0%) !important;
+    }
+    .current_information{
+        flex: 5;
+    }
+    .full_date{
+        flex: 3;
     }
 
     .slide_1_container {
