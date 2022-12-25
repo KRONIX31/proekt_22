@@ -56,10 +56,27 @@ table {
 }
 body{
     background-color: #08001b;
+    overflow: overlay;
 }
+body::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-track{
+    background-color: rgba(0, 0, 0, 0.373);
+    border-radius: 10px 5px 5px 10px;
+}
+body::-webkit-scrollbar-thumb {
+    /*background-color: #ff676787;*/
+    background-image: linear-gradient(180deg, #ff676787 0%, #cb4677a2 100%);
+    border-radius: 10px 5px 5px 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+}
+
 .main{
     font-family: 'myfont';
 }
+
+
 /*.first_on{
     position: fixed;
     top: 0;
@@ -777,6 +794,49 @@ th{
 }
 
 
+.app_footer{
+    background-color: #0a0022;
+    width: 100%;
+    height: auto;
+    padding: 0 10px;
+}
+.footer_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer_information{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background: rgba(0, 0, 0, 0.70);
+    padding: 6px 30px 6px 30px;
+}
+
+.gitHubImg{
+    width: 50px;
+    height: 50px;
+}
+.footer_wrapper a{
+    -webkit-tap-highlight-color: rgba(201, 81, 81, 0.30);
+    text-decoration: none;
+    color: rgb(225, 225, 225);
+    font-size: 20px;
+    line-height: 1px;
+}
+.chic_link{
+    margin-left: 5px;
+}
+.chic_img{
+    border-radius: 45%;
+    width: 22px;
+    height: 22px;
+}
+.nick{
+    margin-left: 11px;
+    line-height: 100% !important;
+    position: relative;
+}
 
 
 
