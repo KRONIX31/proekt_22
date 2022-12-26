@@ -297,7 +297,6 @@ body::-webkit-scrollbar-thumb {
     align-items: center;
     width: 100%;
     background-color: #08001b;
-    background-image: url(AnimatedShape.svg);
     height: 10%;
     padding: 11px 22px;
     font-size: calc(var(--index)*1.1);
@@ -474,16 +473,20 @@ body::-webkit-scrollbar-thumb {
 /* Burger Desktop */
 
 .burger_desktop{
-    display: block;
+    display: none;
     position: fixed;
     width: 20vw;
     top: 0;
     right: 100%;
     background-color: #17223b;
     height: 100%;
-    opacity: 0;
+    transform: translateX(100%);
     transition: transform 0.25s, opacity 0.25s;
     z-index: 11;
+}
+.burger_desktop_hidden{
+    opacity: 0;
+    transform: translateX(0%);
 }
 .burger_desktop_wrapper{
     padding: 30px 0;

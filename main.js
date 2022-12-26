@@ -5,17 +5,17 @@ let todayMonth = NOW.getMonth()
 let todayDay = NOW.getDate()
 let localObject = {}
 const timetable = [
-[new Date(todayYear, todayMonth, todayDay, 8, 30), new Date(todayYear, todayMonth, todayDay, 9, 10)],
-[new Date(todayYear, todayMonth, todayDay, 9, 15), new Date(todayYear, todayMonth, todayDay, 9, 55)],
-[new Date(todayYear, todayMonth, todayDay, 10, 0), new Date(todayYear, todayMonth, todayDay, 10, 40)],
-[new Date(todayYear, todayMonth, todayDay, 10, 45), new Date(todayYear, todayMonth, todayDay, 11, 25)],
-[new Date(todayYear, todayMonth, todayDay, 11, 30), new Date(todayYear, todayMonth, todayDay, 12, 10)],
-[new Date(todayYear, todayMonth, todayDay, 12, 15), new Date(todayYear, todayMonth, todayDay, 12, 55)],
-[new Date(todayYear, todayMonth, todayDay, 13, 0), new Date(todayYear, todayMonth, todayDay, 13, 40)],
-[new Date(todayYear, todayMonth, todayDay, 13, 45), new Date(todayYear, todayMonth, todayDay, 14, 25)],
-[new Date(todayYear, todayMonth, todayDay, 14, 30), new Date(todayYear, todayMonth, todayDay, 15, 10)],
-[new Date(todayYear, todayMonth, todayDay, 15, 15), new Date(todayYear, todayMonth, todayDay, 15, 55)],
-[new Date(todayYear, todayMonth, todayDay, 16, 0), new Date(todayYear, todayMonth, todayDay, 16, 40)]
+    [new Date(todayYear, todayMonth, todayDay, 8, 30), new Date(todayYear, todayMonth, todayDay, 9, 10)],
+    [new Date(todayYear, todayMonth, todayDay, 9, 15), new Date(todayYear, todayMonth, todayDay, 9, 55)],
+    [new Date(todayYear, todayMonth, todayDay, 10, 0), new Date(todayYear, todayMonth, todayDay, 10, 40)],
+    [new Date(todayYear, todayMonth, todayDay, 10, 45), new Date(todayYear, todayMonth, todayDay, 11, 25)],
+    [new Date(todayYear, todayMonth, todayDay, 11, 30), new Date(todayYear, todayMonth, todayDay, 12, 10)],
+    [new Date(todayYear, todayMonth, todayDay, 12, 15), new Date(todayYear, todayMonth, todayDay, 12, 55)],
+    [new Date(todayYear, todayMonth, todayDay, 13, 0), new Date(todayYear, todayMonth, todayDay, 13, 40)],
+    [new Date(todayYear, todayMonth, todayDay, 13, 45), new Date(todayYear, todayMonth, todayDay, 14, 25)],
+    [new Date(todayYear, todayMonth, todayDay, 14, 30), new Date(todayYear, todayMonth, todayDay, 15, 10)],
+    [new Date(todayYear, todayMonth, todayDay, 15, 15), new Date(todayYear, todayMonth, todayDay, 15, 55)],
+    [new Date(todayYear, todayMonth, todayDay, 16, 0), new Date(todayYear, todayMonth, todayDay, 16, 40)]
 ]
 console.log(`%c ${todayYear} год, ${todayMonth} месяц, ${todayDay} число`,
 'background: #ddd; color: #111; font-size: 14px; padding: 1px')
@@ -143,6 +143,7 @@ function timeUpdate(){
     headerFullDate.innerText = date.toLocaleString('ru-RU',{
         year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
     })
+
     //проверка на учебное время и день
     if(date > timetable[10][1] || date < timetable[0][0] || date.getDay() == 0 || date.getDay() == 6){
         const current_lesson_for_check = slide_1_cont.querySelector('.current_lesson')
@@ -175,8 +176,6 @@ function timeUpdate(){
         } else{
             if(timetable[index+1]){
                 if(element[1] < date && timetable[index+1][0] > date){
-                    console.log('lkl', currentLessons[index])
-
                     headerInformation.innerText = `До конца перемены
                     ${sklonenie(Math.floor((timetable[index+1][0]-date)/1000/60), 'min')}
                     ${sklonenie((Math.floor((timetable[index+1][0]-date)/1000 % 60)), 'sec')}`
@@ -649,10 +648,12 @@ async function getdata(){
     // Закрытие бок меню при клике вне (desktop)
 window.addEventListener('click', (e)=>{ 
     if(!((e.target == headerNumClass) || (e.target == headerNumClass_p))){
-        if(burgerDesktop.style.opacity == '1'){
+        if(!burgerDesktop.classList.contains('burger_desktop_hidden)')){
             if(!e.target.closest('.burger_desktop')){
-                burgerDesktop.style.cssText = `transform: translateX(0);
-                opacity: 0`
+                burgerDesktop.classList.add('burger_desktop_hidden')
+                setTimeout(()=>{
+                    burgerDesktop.style.display = 'none'
+                }, 250)
             }
         }
     }
@@ -661,16 +662,18 @@ window.addEventListener('click', (e)=>{
 headerNumClass.addEventListener('click', openBurger)
 function openBurger(){
     if(window.innerWidth > 640){  //Desktop
-        burgerDesktop.style.cssText = `transform: translateX(100%);
-        opacity: 1;`
+        burgerDesktop.style.cssText = 'display: block;'
+        setTimeout(()=>{
+            burgerDesktop.classList.remove('burger_desktop_hidden')
+        }, 10)
+        
         burgerMobile.classList.remove('burger_mobile_open')
     } else{  //Mobile
         burgerMobile.style.display = 'block'
         setTimeout(()=>{
             burgerMobile.classList.add('burger_mobile_open')
         }, 10)
-        burgerDesktop.style.cssText = `transform: translateX(0%);
-        opacity: 0`
+        burgerDesktop.classList.add('burger_desktop_hidden')
     }
 }
 
