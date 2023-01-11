@@ -5,68 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()"/>
+    <meta name="theme-color" content="#000">
     <title>Расписание</title>
     <script src="main.js" defer> </script>
+    <script src="app.js" defer></script>
     <link type="text/css" rel="stylesheet" href="style.css">
     <link rel="icon" href="icon192.png" sizes="192x192" type="image/png">
     <link rel="icon" href="icon512.png" sizes="512x512" type="image/png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon192.png">
 </head>
 <body>
     <main class="main">
-        <!--<div class="first_on">
-            <div class="bubbles">
-                <span style="--i:19"></span>
-                <span style="--i:17"></span>
-                <span style="--i:7"></span>
-                <span style="--i:18"></span>
-                <span style="--i:15"></span>
-                <span style="--i:23"></span>
-                <span style="--i:25"></span>
-                <span style="--i:7"></span>
-                <span style="--i:11"></span>
-                <span style="--i:22"></span>
-                <span style="--i:21"></span>
-                <span style="--i:19"></span>
-                <span style="--i:8"></span>
-                <span style="--i:21"></span>
-                <span style="--i:12"></span>
-                <span style="--i:9"></span>
-                <span style="--i:7"></span>
-                <span style="--i:25"></span>
-                <span style="--i:12"></span>
-                <span style="--i:10"></span>
-            </div>
-            <div class="dialog_wrapper">
-                <div class="dialog_first_block">
-                    <div class="dialog_text">
-                        <div class="icon_wrapper"><img src="up-arrow.svg"></div>
-                        <div>Выберите класс</div>
-                    </div>
-                    <ul class="dialog_ul">
-                        <li>1 класс</li>
-                        <li>2 класс</li>
-                        <li>3 класс</li>
-                        <li>4 класс</li>
-                        <li>5 класс</li>
-                        <li>6 класс</li>
-                        <li>7 класс</li>
-                        <li>8 класс</li>
-                        <li>9 класс</li>
-                        <li>10 класс</li>
-                        <li>11 класс</li>
-                    </ul>
-                </div>
-                <div class="dialog_second_block">
-                    <button type="button">OK</button>
-                </div>
-                <div class="welcome_poloski">
-                    <span class="poloska"></span>
-                    <span class="poloska"></span>
-                    <span class="poloska"></span>
-                    <span class="poloska"></span>
-                </div>
-            </div>
-        </div>-->
         <div class="load_screen">
             <div></div>
         </div>
@@ -77,18 +27,11 @@
                         <p></p>
                         <img src="burger.svg" alt="Класс">
                     </div>
-                    <div class="header_schedule header_active">
-                        <p>Расписание</p>
+                    <div class="current_information">
+
                     </div>
-                    <div class="header_next_wrap_parent">
-                        <div class="header_next_wrap">
-                            <p>Планировщик событий</p>
-                            <img alt="далее" src="arrow_forward.svg">
-                            <span class="poloska"></span>
-                            <span class="poloska"></span>
-                            <span class="poloska"></span>
-                            <span class="poloska"></span>
-                        </div>
+                    <div class="full_date">
+                        
                     </div>
                     <span class="poloska"></span>
                     <div class="burger_mobile">
@@ -97,34 +40,42 @@
                                 <img src="close.svg" alt="Закрыть">
                             </div>
                             <ul class="burger_ul">
-                                <li><span href="#!">1 Класс</span></li>
-                                <li><span href="#!">2 Класс</span></li>
-                                <li><span href="#!">3 Класс</span></li>
-                                <li><span href="#!">4 Класс</span></li>
-                                <li><span href="#!">5 Класс</span></li>
-                                <li><span href="#!">6 Класс</span></li>
-                                <li><span href="#!">7 Класс</span></li>
-                                <li><span href="#!">8 Класс</span></li>
-                                <li><span href="#!">9 Класс</span></li>
-                                <li><span href="#!">10 Класс</span></li>
-                                <li><span href="#!">11 Класс</span></li>
+                                <li><span data-class="1" href="#!">1а Класс</span></li>
+                                <li><span data-class="2" href="#!">1б Класс</span></li>
+                                <li><span data-class="3" href="#!">2 Класс</span></li>
+                                <li><span data-class="4" href="#!">3а Класс</span></li>
+                                <li><span data-class="5" href="#!">3б Класс</span></li>
+                                <li><span data-class="6" href="#!">4а Класс</span></li>
+                                <li><span data-class="7" href="#!">4б Класс</span></li>
+                                <li><span data-class="8" href="#!">5а Класс</span></li>
+                                <li><span data-class="9" href="#!">5б Класс</span></li>
+                                <li><span data-class="10" href="#!">6 Класс</span></li>
+                                <li><span data-class="11" href="#!">7 Класс</span></li>
+                                <li><span data-class="12" href="#!">8 Класс</span></li>
+                                <li><span data-class="13" href="#!">9 Класс</span></li>
+                                <li><span data-class="14" href="#!">10 Класс</span></li>
+                                <li><span data-class="15" href="#!">11 Класс</span></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="burger_desktop">
+                    <div class="burger_desktop burger_desktop_hidden">
                         <div class="burger_desktop_wrapper">
                             <ul class="burger_ul burger_ul_desk">
-                                <li><span href="#!">1 Класс</span></li>
-                                <li><span href="#!">2 Класс</span></li>
-                                <li><span href="#!">3 Класс</span></li>
-                                <li><span href="#!">4 Класс</span></li>
-                                <li><span href="#!">5 Класс</span></li>
-                                <li><span href="#!">6 Класс</span></li>
-                                <li><span href="#!">7 Класс</span></li>
-                                <li><span href="#!">8 Класс</span></li>
-                                <li><span href="#!">9 Класс</span></li>
-                                <li><span href="#!">10 Класс</span></li>
-                                <li><span href="#!">11 Класс</span></li>
+                                <li><span data-class="1" href="#!">1а Класс</span></li>
+                                <li><span data-class="2" href="#!">1б Класс</span></li>
+                                <li><span data-class="3" href="#!">2 Класс</span></li>
+                                <li><span data-class="4" href="#!">3а Класс</span></li>
+                                <li><span data-class="5" href="#!">3б Класс</span></li>
+                                <li><span data-class="6" href="#!">4а Класс</span></li>
+                                <li><span data-class="7" href="#!">4б Класс</span></li>
+                                <li><span data-class="8" href="#!">5а Класс</span></li>
+                                <li><span data-class="9" href="#!">5б Класс</span></li>
+                                <li><span data-class="10" href="#!">6 Класс</span></li>
+                                <li><span data-class="11" href="#!">7 Класс</span></li>
+                                <li><span data-class="12" href="#!">8 Класс</span></li>
+                                <li><span data-class="13" href="#!">9 Класс</span></li>
+                                <li><span data-class="14" href="#!">10 Класс</span></li>
+                                <li><span data-class="15" href="#!">11 Класс</span></li>
                             </ul>
                         </div>
                     </div>
@@ -133,275 +84,21 @@
                 <div class="app_body">
                     <div class="app_slide app_slide_1">
                         <div class="slide_1_container">
-                            <!--<nav class="table_nav">
-                                <span class="active_day">Понедельник</span>
-                                <span>Вторник</span>
-                                <span>Среда</span>
-                                <span>Четверг</span>
-                                <span>Пятница</span>
-                            </nav>
-                            <div class="table_slider_wrapper">
-                                <div class="table_slider">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th class="table_day">Понедельник</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <td class="current_day">Астрономия</td>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                <td class="current_day">Практикум по информатике</td>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>8</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>9</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>10</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th class="table_day">Вторник</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <td class="current_day">Астрономия</td>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                <td class="current_day">Практикум по информатике</td>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>8</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>9</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>10</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th class="table_day">Среда</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <td class="current_day">Астрономия</td>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                <td class="current_day">Практикум по информатике</td>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>8</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>9</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>10</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th class="table_day">Четверг</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <td class="current_day">Астрономия</td>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                <td class="current_day">Практикум по информатике</td>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>8</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>9</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>10</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th class="table_day">Пятница</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td class="current_day">Английский язык</td>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <td class="current_day">Астрономия</td>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                <td class="current_day">Практикум по информатике</td>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>8</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>9</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>10</th>
-                                                <td class="current_day"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>-->
+                            
                         </div>
-                    </div>
-                    <div class="app_slide app_slide_2">
-
                     </div>
                 </div>
             </div>
         </div>
+        <footer class="app_footer">
+            <div class="footer_wrapper">
+                <a target="_blank" href="https://github.com/KRONIX31/proekt_22" class="footer_information">
+                    <p><img alt="GITHUB" class="gitHubImg" src="github_mark_white.svg"></p>
+                    <p class="nick">KRONIX31</p>
+                    <p class="chic_link"><img alt="GITHUB" class="chic_img" src="chic.png"></p>
+                </a>
+            </div>
+        </footer>
     </main>
 </body>
 </html>

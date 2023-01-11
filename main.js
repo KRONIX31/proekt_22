@@ -1,51 +1,52 @@
 const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-todayYear = new Date().getFullYear()
-todayMonth = new Date().getMonth()
-todayDay = new Date().getDate()
+const NOW = new Date()
+let todayYear = NOW.getFullYear()
+let todayMonth = NOW.getMonth()
+let todayDay = NOW.getDate()
 let localObject = {}
 const timetable = [
-[new Date(todayYear, todayMonth, todayDay, 8, 30), new Date(todayYear, todayMonth, todayDay, 9, 10)],
-[new Date(todayYear, todayMonth, todayDay, 9, 15), new Date(todayYear, todayMonth, todayDay, 9, 55)],
-[new Date(todayYear, todayMonth, todayDay, 10, 0), new Date(todayYear, todayMonth, todayDay, 10, 40)],
-[new Date(todayYear, todayMonth, todayDay, 10, 45), new Date(todayYear, todayMonth, todayDay, 11, 25)],
-[new Date(todayYear, todayMonth, todayDay, 11, 30), new Date(todayYear, todayMonth, todayDay, 12, 10)],
-[new Date(todayYear, todayMonth, todayDay, 12, 15), new Date(todayYear, todayMonth, todayDay, 12, 55)],
-[new Date(todayYear, todayMonth, todayDay, 13, 0), new Date(todayYear, todayMonth, todayDay, 13, 40)],
-[new Date(todayYear, todayMonth, todayDay, 13, 45), new Date(todayYear, todayMonth, todayDay, 14, 25)],
-[new Date(todayYear, todayMonth, todayDay, 14, 30), new Date(todayYear, todayMonth, todayDay, 15, 10)],
-[new Date(todayYear, todayMonth, todayDay, 15, 15), new Date(todayYear, todayMonth, todayDay, 15, 55)],
-[new Date(todayYear, todayMonth, todayDay, 16, 0), new Date(todayYear, todayMonth, todayDay, 16, 40)]
+    [new Date(todayYear, todayMonth, todayDay, 8, 30), new Date(todayYear, todayMonth, todayDay, 9, 10)],
+    [new Date(todayYear, todayMonth, todayDay, 9, 15), new Date(todayYear, todayMonth, todayDay, 9, 55)],
+    [new Date(todayYear, todayMonth, todayDay, 10, 0), new Date(todayYear, todayMonth, todayDay, 10, 40)],
+    [new Date(todayYear, todayMonth, todayDay, 10, 45), new Date(todayYear, todayMonth, todayDay, 11, 25)],
+    [new Date(todayYear, todayMonth, todayDay, 11, 30), new Date(todayYear, todayMonth, todayDay, 12, 10)],
+    [new Date(todayYear, todayMonth, todayDay, 12, 15), new Date(todayYear, todayMonth, todayDay, 12, 55)],
+    [new Date(todayYear, todayMonth, todayDay, 13, 0), new Date(todayYear, todayMonth, todayDay, 13, 40)],
+    [new Date(todayYear, todayMonth, todayDay, 13, 45), new Date(todayYear, todayMonth, todayDay, 14, 25)],
+    [new Date(todayYear, todayMonth, todayDay, 14, 30), new Date(todayYear, todayMonth, todayDay, 15, 10)],
+    [new Date(todayYear, todayMonth, todayDay, 15, 15), new Date(todayYear, todayMonth, todayDay, 15, 55)],
+    [new Date(todayYear, todayMonth, todayDay, 16, 0), new Date(todayYear, todayMonth, todayDay, 16, 40)]
 ]
-console.log(todayYear, todayMonth, todayDay)
+console.log(`%c ${todayYear} год, ${todayMonth} месяц, ${todayDay} число`,
+'background: #ddd; color: #111; font-size: 14px; padding: 1px')
 
-let response, data, propysk
-const day = new Date().getDay() - 1
-// Var DIALOG
-/*const dialogText = document.querySelector('.dialog_text')
-const dialogText_p = document.querySelector('.dialog_text div:first-child')
-const dialogIconWrapper = document.querySelector('.icon_wrapper')
-const dialogFirstBlock = document.querySelector('.dialog_first_block')
-const dialogUl = document.querySelector('.dialog_ul')
-const dialogUlLists = document.querySelectorAll('li')
-const dialogButton = document.querySelector('.dialog_second_block button')*/
+let response, data, propysk, interval
+const day = NOW.getDay() - 1
+
 // Var HEADER
 const headerNumClass = document.querySelector('.header_num_class')
 const headerNumClass_p = document.querySelector('.header_num_class p')
+const headerInformation = document.querySelector('.current_information')
+const headerFullDate = document.querySelector('.full_date')
 const burgerMobile = document.querySelector('.burger_mobile')
 const burgerMobileClose_img = document.querySelector('.burger_mobile_header img')
 const burgerDesktop = document.querySelector('.burger_desktop')
 const burgerUl = document.querySelectorAll('.burger_ul')
 // Var App
 const slide_1_cont = document.querySelector('.slide_1_container')
+const loadScreen = document.querySelector('.load_screen')
+
 
 if(localStorage.getItem('localObject')){
     localObject = JSON.parse(localStorage.getItem('localObject'))
 } else{
-    localObject.class = '11'
+    localObject.class = '15'
+    localObject.classText = '11 класс'
     localStorage.setItem('localObject', JSON.stringify(localObject))
 }
 document.addEventListener('DOMContentLoaded', DOMLoaded)
 function DOMLoaded(){
+    interval = setInterval(timeUpdate, 1000)
     spanAddListener()
     getdata()
 }
@@ -55,22 +56,26 @@ function spanAddListener(){
             span.addEventListener('click', chooseClass)
         })
         ul.querySelector(`li:nth-child(${localObject.class})`).classList.add('burger_active')
-        headerNumClass_p.innerHTML = `${localObject.class} класс`
+        headerNumClass_p.innerHTML = `${localObject.classText}`
     })
 }
 function chooseClass(e){
+    slide_1_cont.innerHTML = `<div class="load_screen"><div></div></div>`
     const span = e.target
     if(!span.parentElement.classList.contains('burger_active')){
-        const spanText = span.innerText.split(' ')[0]
-        headerNumClass_p.innerHTML = `${spanText} класс`
+        let spanText = span.innerText
+        let spanNum = span.dataset.class
+        console.log(spanNum, spanText)
+
+        headerNumClass_p.innerHTML = `${spanText}`
         burgerUl.forEach(ul => {
             const activeLi = ul.querySelector('.burger_active')
             activeLi.classList.remove('burger_active')
-            ul.querySelector(`li:nth-child(${spanText})`).classList.add('burger_active')
+            ul.querySelector(`li:nth-child(${spanNum})`).classList.add('burger_active')
         })
-        localObject.class = `${spanText}`
+        localObject.class = `${spanNum}`
+        localObject.classText = `${spanText}`
         localStorage.setItem('localObject', JSON.stringify(localObject))
-        console.log(localObject)
         getdata()
         propysk = true
         setTimeout(()=>{
@@ -80,36 +85,131 @@ function chooseClass(e){
             setTimeout(()=>{
                 burgerMobile.style.display = 'none'
             }, 240)
-        }, 100)
+        }, 60)
     }
 }
 
-//DIALOG
-/*if(!localStorage.firstOn){
-    const firstOn = document.querySelector('.first_on')
-    firstOn.style.display = 'flex'
-    firstOn.classList.add('welcome_visible')
-}*/
-document.fonts.onloadingdone = (e) => {
-    console.log('font-face load event')
-    const loadScreen = document.querySelector('.load_screen')
+
+function hideLoadingScreen(){
+    console.log('font-face load event or DomContentLoaded')
     loadScreen.style.opacity = '0'
     setTimeout(()=>{
         loadScreen.style.display = 'none'
     }, 300)
 }
+if(((/iPad|iPhone|iPod|Mac/.test(navigator.userAgent)) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+&& !window.MSStream){
+    //IOS
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hideLoadingScreen()
+        console.log('ios')
+    })
+} else{
+    //Все остальное
+    document.fonts.onloadingdone = () => {
+        hideLoadingScreen()
+        console.log('not ios')
+    }
+}
 
+function sklonenie(num, MinsOrSeconds) {
+    if(MinsOrSeconds === 'min'){
+        if(num % 10 == 1){
+            return `${num} минута`
+        } else{
+            if(num % 10 == 2 || num % 10 == 3 || num % 10 == 4){
+                return `${num} минуты`
+            } else{
+                return `${num} минут`
+            }
+        }
+    }
+    if(MinsOrSeconds === 'sec'){
+        if(num % 10 == 1){
+            return `${num} секунда`
+        } else{
+            if(num % 10 == 2 || num % 10 == 3 || num % 10 == 4){
+                return `${num} секунды`
+            } else{
+                return `${num} секунд`
+            }
+        }
+    }
+}
+
+function timeUpdate(){
+    
+    const date = new Date()
+    headerFullDate.innerText = date.toLocaleString('ru-RU',{
+        year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
+    })
+
+    //проверка на учебное время и день
+    if(date > timetable[10][1] || date < timetable[0][0] || date.getDay() == 0 || date.getDay() == 6){
+        const current_lesson_for_check = slide_1_cont.querySelector('.current_lesson')
+        const current_lesson_span_for_check = slide_1_cont.querySelector('.current_lesson_span')
+        if(current_lesson_for_check || current_lesson_span_for_check){
+            current_lesson_for_check.classList.remove('current_lesson')
+            current_lesson_span_for_check.classList.remove('current_lesson_span')
+        }
+        headerInformation.innerText = 'Сейчас не учебное время'
+        return 'не учебное время'
+    }
+
+    timetable.forEach((element, index)=>{
+
+        const currentLessons = slide_1_cont.querySelectorAll(`table .current_day`)
+        if(element[0] < date && element[1] > date){
+            const lesson = index
+            const percent = 100 - ((element[1] - date) / (1000*60) / 40)*100
+            currentLessons.forEach((elem)=>{
+                if(elem !== currentLessons[lesson])
+                elem.childNodes[0].classList.remove('current_lesson_span')
+                elem.classList.remove('current_lesson')
+            })
+            currentLessons[lesson].classList.add('current_lesson')
+            currentLessons[lesson].children[0].classList.add('current_lesson_span')
+            slide_1_cont.querySelector('.current_lesson div').style.cssText = `--percent:${percent}`
+            ////////////////////////////
+            headerInformation.innerText = `До конца урока ${sklonenie(Math.round((timetable[index][1] - date)/1000/60), 'min')}`
+
+        } else{
+            if(timetable[index+1]){
+                if(element[1] < date && timetable[index+1][0] > date){
+                    headerInformation.innerText = `До конца перемены
+                    ${sklonenie(Math.floor((timetable[index+1][0]-date)/1000/60), 'min')}
+                    ${sklonenie((Math.floor((timetable[index+1][0]-date)/1000 % 60)), 'sec')}`
+                    
+                    currentLessons[index].classList.add('current_lesson')
+                    currentLessons[index].children[1].style.cssText = `--percent: 100`
+                }
+            }
+        }
+        
+    })
+}
 async function getdata(){
+    clearInterval(interval)
     const response = await fetch(`https://kronix31.github.io/proekt_22/data/data_${localObject.class}.json`)
     if (!response.ok) {
         const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+        throw new (message);
     }
-    data = await response.json()
+    data = await response.json().catch((message)=>{
+        slide_1_cont.innerHTML = `<p class="error_message">${message}</p>`
+        console.warn(message)
+        return false
+    })
     console.log(data)
+    if(!data){return}
 
-    window.onresize = render
+    window.addEventListener('resize', ()=>{
+        render()
+        timeUpdate()
+    })
     render()
+    timeUpdate()
+    interval = setInterval(timeUpdate, 1000)
     function render(){
         if(window.innerWidth > 640){ // Desktop Table
             const componentDesktop = `<table>
@@ -126,91 +226,91 @@ async function getdata(){
         <tbody>
             <tr> <!-- 1 -->
                 <th>1</th>
-                <td class="current_lesson">${data[0][1]}<div></div></td>
-                <td>${data[1][1]}<div></div></td>
-                <td>${data[2][1]}<div></div></td>
-                <td>${data[3][1]}<div></div></td>
-                <td>${data[4][1]}<div></div></td>
+                <td><span>${data[0][1]}</span><div></div></td>
+                <td><span>${data[1][1]}</span><div></div></td>
+                <td><span>${data[2][1]}</span><div></div></td>
+                <td><span>${data[3][1]}</span><div></div></td>
+                <td><span>${data[4][1]}</span><div></div></td>
             </tr>
             <tr> <!-- 2 -->
                 <th>2</th>
-                <td>${data[0][2]}<div></div></td>
-                <td>${data[1][2]}<div></div></td>
-                <td>${data[2][2]}<div></div></td>
-                <td>${data[3][2]}<div></div></td>
-                <td>${data[4][2]}<div></div></td>
+                <td><span>${data[0][2]}</span><div></div></td>
+                <td><span>${data[1][2]}</span><div></div></td>
+                <td><span>${data[2][2]}</span><div></div></td>
+                <td><span>${data[3][2]}</span><div></div></td>
+                <td><span>${data[4][2]}</span><div></div></td>
             </tr>
             <tr> <!-- 3 -->
                 <th>3</th>
-                <td>${data[0][3]}<div></div></td>
-                <td>${data[1][3]}<div></div></td>
-                <td>${data[2][3]}<div></div></td>
-                <td>${data[3][3]}<div></div></td>
-                <td>${data[4][3]}<div></div></td>
+                <td><span>${data[0][3]}</span><div></div></td>
+                <td><span>${data[1][3]}</span><div></div></td>
+                <td><span>${data[2][3]}</span><div></div></td>
+                <td><span>${data[3][3]}</span><div></div></td>
+                <td><span>${data[4][3]}</span><div></div></td>
             </tr>
             <tr> <!-- 4 -->
                 <th>4</th>
-                <td>${data[0][4]}<div></div></td>
-                <td>${data[1][4]}<div></div></td>
-                <td>${data[2][4]}<div></div></dh>
-                <td>${data[3][4]}<div></div></td>
-                <td>${data[4][4]}<div></div></td>
+                <td><span>${data[0][4]}</span><div></div></td>
+                <td><span>${data[1][4]}</span><div></div></td>
+                <td><span>${data[2][4]}</span><div></div></dh>
+                <td><span>${data[3][4]}</span><div></div></td>
+                <td><span>${data[4][4]}</span><div></div></td>
             </tr>
             <tr> <!-- 5 -->
                 <th>5</th>
-                <td>${data[0][5]}<div></div></td>
-                <td>${data[1][5]}<div></div></td>
-                <td>${data[2][5]}<div></div></td>
-                <td>${data[3][5]}<div></div></td>
-                <td>${data[4][5]}<div></div></td>
+                <td><span>${data[0][5]}</span><div></div></td>
+                <td><span>${data[1][5]}</span><div></div></td>
+                <td><span>${data[2][5]}</span><div></div></td>
+                <td><span>${data[3][5]}</span><div></div></td>
+                <td><span>${data[4][5]}</span><div></div></td>
             </tr>
             <tr> <!-- 6 -->
                 <th>6</th>
-                <td>${data[0][6]}<div></div></td>
-                <td>${data[1][6]}<div></div></td>
-                <td>${data[2][6]}<div></div></td>
-                <td>${data[3][6]}<div></div></td>
-                <td>${data[4][6]}<div></div></td>
+                <td><span>${data[0][6]}</span><div></div></td>
+                <td><span>${data[1][6]}</span><div></div></td>
+                <td><span>${data[2][6]}</span><div></div></td>
+                <td><span>${data[3][6]}</span><div></div></td>
+                <td><span>${data[4][6]}</span><div></div></td>
             </tr>
             <tr> <!-- 7 -->
                 <th>7</th>
-                <td>${data[0][7]}<div></div></td>
-                <td>${data[1][7]}<div></div></td>
-                <td>${data[2][7]}<div></div></td>
-                <td>${data[3][7]}<div></div></td>
-                <td>${data[4][7]}<div></div></td>
+                <td><span>${data[0][7]}</span><div></div></td>
+                <td><span>${data[1][7]}</span><div></div></td>
+                <td><span>${data[2][7]}</span><div></div></td>
+                <td><span>${data[3][7]}</span><div></div></td>
+                <td><span>${data[4][7]}</span><div></div></td>
             </tr>
             <tr> <!-- 8 -->
                 <th>8</th>
-                <td>${data[0][8]}<div></div></td>
-                <td>${data[1][8]}<div></div></td>
-                <td>${data[2][8]}<div></div></td>
-                <td>${data[3][8]}<div></div></td>
-                <td>${data[4][8]}<div></div></td>
+                <td><span>${data[0][8]}</span><div></div></td>
+                <td><span>${data[1][8]}</span><div></div></td>
+                <td><span>${data[2][8]}</span><div></div></td>
+                <td><span>${data[3][8]}</span><div></div></td>
+                <td><span>${data[4][8]}</span><div></div></td>
             </tr>
             <tr> <!-- 9 -->
                 <th>9</th>
-                <td>${data[0][9]}<div></div></td>
-                <td>${data[1][9]}<div></div></td>
-                <td>${data[2][9]}<div></div></td>
-                <td>${data[3][9]}<div></div></td>
-                <td>${data[4][9]}<div></div></td>
+                <td><span>${data[0][9]}</span><div></div></td>
+                <td><span>${data[1][9]}</span><div></div></td>
+                <td><span>${data[2][9]}</span><div></div></td>
+                <td><span>${data[3][9]}</span><div></div></td>
+                <td><span>${data[4][9]}</span><div></div></td>
             </tr>
             <tr> <!-- 10 -->
                 <th>10</th>
-                <td>${data[0][10]}<div></div></td>
-                <td>${data[1][10]}<div></div></td>
-                <td>${data[2][10]}<div></div></td>
-                <td>${data[3][10]}<div></div></td>
-                <td>${data[4][10]}<div></div></td>
+                <td><span>${data[0][10]}</span><div></div></td>
+                <td><span>${data[1][10]}</span><div></div></td>
+                <td><span>${data[2][10]}</span><div></div></td>
+                <td><span>${data[3][10]}</span><div></div></td>
+                <td><span>${data[4][10]}</span><div></div></td>
             </tr>
             <tr> <!-- 11 -->
             <th>11</th>
-            <td>${data[0][11]}<div></div></td>
-            <td>${data[1][11]}<div></div></td>
-            <td>${data[2][11]}<div></div></td>
-            <td>${data[3][11]}<div></div></td>
-            <td>${data[4][11]}<div></div></td>
+            <td><span>${data[0][11]}</span><div></div></td>
+            <td><span>${data[1][11]}</span><div></div></td>
+            <td><span>${data[2][11]}</span><div></div></td>
+            <td><span>${data[3][11]}</span><div></div></td>
+            <td><span>${data[4][11]}</span><div></div></td>
         </tr>
         </tbody>
             </table>`
@@ -220,14 +320,6 @@ async function getdata(){
                 for(i = 0; i < currentCell.length; i+=5){
                     currentCell[i + day].classList.add('current_day')
                 }
-                setInterval(()=>{
-                    let time = new Date()
-                    let hours = time.getHours()
-                    let minutes = time.getMinutes()
-                    if(hours <= timetable[0][0]){
-                        
-                    }
-                }, 1500)
             }
         } else{ // Mobile Table
 
@@ -253,47 +345,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td class="current_lesson"><div></div>${data[0][1]}</td>
+                                    <td><span>${data[0][1]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td><div></div>${data[0][2]}</td>
+                                    <td><span>${data[0][2]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td><div></div>${data[0][3]}</td>
+                                    <td><span>${data[0][3]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td><div></div>${data[0][4]}</td>
+                                    <td><span>${data[0][4]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td><div></div>${data[0][5]}</td>
+                                    <td><span>${data[0][5]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td><div></div>${data[0][6]}</td>
+                                    <td><span>${data[0][6]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td><div></div>${data[0][7]}</td>
+                                    <td><span>${data[0][7]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td><div></div>${data[0][8]}</td>
+                                    <td><span>${data[0][8]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td><div></div>${data[0][9]}</td>
+                                    <td><span>${data[0][9]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td><div></div>${data[0][10]}</td>
+                                    <td><span>${data[0][10]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><div></div>${data[0][11]}</td>
+                                    <td><span>${data[0][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -307,47 +399,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td><div></div>${data[1][1]}</td>
+                                    <td><span>${data[1][1]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td><div></div>${data[1][2]}</td>
+                                    <td><span>${data[1][2]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td><div></div>${data[1][3]}</td>
+                                    <td><span>${data[1][3]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td><div></div>${data[1][4]}</td>
+                                    <td><span>${data[1][4]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td><div></div>${data[1][5]}</td>
+                                    <td><span>${data[1][5]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td><div></div>${data[1][6]}</td>
+                                    <td><span>${data[1][6]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td><div></div>${data[1][7]}</td>
+                                    <td><span>${data[1][7]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td><div></div>${data[1][8]}</td>
+                                    <td><span>${data[1][8]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td><div></div>${data[1][9]}</td>
+                                    <td><span>${data[1][9]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td><div></div>${data[1][10]}</td>
+                                    <td><span>${data[1][10]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><div></div>${data[0][11]}</td>
+                                    <td><span>${data[0][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -361,47 +453,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td><div></div>${data[2][1]}</td>
+                                    <td><span>${data[2][1]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td><div></div>${data[2][2]}</td>
+                                    <td><span>${data[2][2]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td><div></div>${data[2][3]}</td>
+                                    <td><span>${data[2][3]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td><div></div>${data[2][4]}</td>
+                                    <td><span>${data[2][4]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td><div></div>${data[2][5]}</td>
+                                    <td><span>${data[2][5]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td><div></div>${data[2][6]}</td>
+                                    <td><span>${data[2][6]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td><div></div>${data[2][7]}</td>
+                                    <td><span>${data[2][7]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td><div></div>${data[2][8]}</td>
+                                    <td><span>${data[2][8]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td><div></div>${data[2][9]}</td>
+                                    <td><span>${data[2][9]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td><div></div>${data[2][10]}</td>
+                                    <td><span>${data[2][10]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><div></div>${data[0][11]}</td>
+                                    <td><span>${data[0][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -415,47 +507,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td><div></div>${data[3][1]}</td>
+                                    <td><span>${data[3][1]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td><div></div>${data[3][2]}</td>
+                                    <td><span>${data[3][2]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td><div></div>${data[3][3]}</td>
+                                    <td><span>${data[3][3]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td><div></div>${data[3][4]}</td>
+                                    <td><span>${data[3][4]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td><div></div>${data[3][5]}</td>
+                                    <td><span>${data[3][5]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td><div></div>${data[3][6]}</td>
+                                    <td><span>${data[3][6]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td><div></div>${data[3][7]}</td>
+                                    <td><span>${data[3][7]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td><div></div>${data[3][8]}</td>
+                                    <td><span>${data[3][8]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td><div></div>${data[3][9]}</td>
+                                    <td><span>${data[3][9]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td><div></div>${data[3][10]}</td>
+                                    <td><span>${data[3][10]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><div></div>${data[0][11]}</td>
+                                    <td><span>${data[0][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -469,47 +561,47 @@ async function getdata(){
                             <tbody>
                                 <tr>
                                     <th>1</th>
-                                    <td><div></div>${data[4][1]}</td>
+                                    <td><span>${data[4][1]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td><div></div>${data[4][2]}</td>
+                                    <td><span>${data[4][2]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td><div></div>${data[4][3]}</td>
+                                    <td><span>${data[4][3]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td><div></div>${data[4][4]}</td>
+                                    <td><span>${data[4][4]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td><div></div>${data[4][5]}</td>
+                                    <td><span>${data[4][5]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>6</th>
-                                    <td><div></div>${data[4][6]}</td>
+                                    <td><span>${data[4][6]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>7</th>
-                                    <td><div></div>${data[4][7]}</td>
+                                    <td><span>${data[4][7]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>8</th>
-                                    <td><div></div>${data[4][8]}</td>
+                                    <td><span>${data[4][8]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>9</th>
-                                    <td><div></div>${data[4][9]}</td>
+                                    <td><span>${data[4][9]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>10</th>
-                                    <td><div></div>${data[4][10]}</td>
+                                    <td><span>${data[4][10]}</span><div></div></td>
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><div></div>${data[0][11]}</td>
+                                    <td><span>${data[0][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -551,46 +643,17 @@ async function getdata(){
     }
 }
 
-/*function toggleDialog(){
-    dialogText_p.classList.toggle('dialog_active')
-    dialogFirstBlock.classList.toggle('dialog_active')
-    dialogIconWrapper.querySelector('img').classList.toggle('icon_img_active')
-
-    dialogUl.classList.toggle('dialog_ul_active')
-
-}
-
-dialogText.addEventListener('click', ()=>{
-    toggleDialog()
-})
-dialogUlLists.forEach(element => {
-    element.addEventListener('click', (e)=>{
-        toggleDialog()
-        dialogText_p.innerText = e.target.innerText
-    })
-})
-dialogButton.addEventListener('click', ()=>{
-    let clas = dialogText_p.innerText
-    if(clas == 'Выберите класс'){
-        alert('выберите класс!')
-    } else{
-        localStorage.firstOn = 'false'
-        dialogFirstBlock.parentElement.parentElement.classList.remove('welcome_visible')
-        setTimeout(()=>{
-            dialogFirstBlock.parentElement.parentElement.style.display = 'none'
-        }, 300)
-    }
-})*/
-
 
 // HEADER
     // Закрытие бок меню при клике вне (desktop)
 window.addEventListener('click', (e)=>{ 
     if(!((e.target == headerNumClass) || (e.target == headerNumClass_p))){
-        if(burgerDesktop.style.opacity == '1'){
+        if(!burgerDesktop.classList.contains('burger_desktop_hidden)')){
             if(!e.target.closest('.burger_desktop')){
-                burgerDesktop.style.cssText = `transform: translateX(0);
-                opacity: 0`
+                burgerDesktop.classList.add('burger_desktop_hidden')
+                setTimeout(()=>{
+                    burgerDesktop.style.display = 'none'
+                }, 250)
             }
         }
     }
@@ -599,16 +662,18 @@ window.addEventListener('click', (e)=>{
 headerNumClass.addEventListener('click', openBurger)
 function openBurger(){
     if(window.innerWidth > 640){  //Desktop
-        burgerDesktop.style.cssText = `transform: translateX(100%);
-        opacity: 1;`
+        burgerDesktop.style.cssText = 'display: block;'
+        setTimeout(()=>{
+            burgerDesktop.classList.remove('burger_desktop_hidden')
+        }, 10)
+        
         burgerMobile.classList.remove('burger_mobile_open')
     } else{  //Mobile
         burgerMobile.style.display = 'block'
         setTimeout(()=>{
             burgerMobile.classList.add('burger_mobile_open')
         }, 10)
-        burgerDesktop.style.cssText = `transform: translateX(0%);
-        opacity: 0`
+        burgerDesktop.classList.add('burger_desktop_hidden')
     }
 }
 
