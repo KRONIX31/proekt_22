@@ -6,6 +6,7 @@
     "display": "standalone",
     "orientation": "portrait",
     "start_url": ".",
+    "id": "/proekt_22/",
     "prefer_related_applications": true,
     "icons": [
         {
