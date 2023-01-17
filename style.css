@@ -54,6 +54,9 @@ table {
 :root{
     --index: calc(1vw + 1vh)
 }
+html{
+    scrollbar-color: #a49bbb #08001b;
+}
 body{
     background-color: #08001b;
     overflow: overlay;
@@ -408,6 +411,7 @@ body::-webkit-scrollbar-thumb {
     padding: 47px 0;
     margin: -47px 0;
     overflow: overlay;
+    overflow-y: auto;
 }
 .burger_ul li:not(:last-child){
     margin-bottom: 8px;

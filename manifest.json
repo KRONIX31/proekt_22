@@ -1,12 +1,12 @@
 {
-    "name": "KRONIX",
-    "short_name": "KRONIX",
-    "theme_color": "#000",
+    "name": "Расписание",
+    "short_name": "Расп.",
+    "theme_color": "#08001b",
     "background_color": "#08001b",
     "display": "standalone",
+    "description": "Школьное расписание для учеников",
     "orientation": "portrait",
     "start_url": ".",
-    "id": "/proekt_22/",
     "prefer_related_applications": true,
     "icons": [
         {

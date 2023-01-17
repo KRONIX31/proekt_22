@@ -12,6 +12,7 @@ const staticAssets = [
 ]
 self.addEventListener('install', async (e)=>{
     console.log('service Worker установлен', e)
+    self.skipWaiting()
     
     const cache = await caches.open(staticCacheName)
     await cache.addAll(staticAssets)

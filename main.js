@@ -115,7 +115,11 @@ if(((/iPad|iPhone|iPod|Mac/.test(navigator.userAgent)) || (navigator.platform ==
 function sklonenie(num, MinsOrSeconds) {
     if(MinsOrSeconds === 'min'){
         if(num % 10 == 1){
-            return `${num} минута`
+            if(num === 11){
+                return `${num} минут`
+            } else{
+                return `${num} минута`
+            }
         } else{
             if(num % 10 == 2 || num % 10 == 3 || num % 10 == 4){
                 return `${num} минуты`
@@ -126,9 +130,13 @@ function sklonenie(num, MinsOrSeconds) {
     }
     if(MinsOrSeconds === 'sec'){
         if(num % 10 == 1){
-            return `${num} секунда`
+            if(num === 11){
+                return `${num} секунд`
+            } else{
+                return `${num} секунда`
+            }
         } else{
-            if(num % 10 == 2 || num % 10 == 3 || num % 10 == 4){
+            if((num % 10 == 2 || num % 10 == 3 || num % 10 == 4) && (num !== 12) && (num !== 13) && (num !== 14)){
                 return `${num} секунды`
             } else{
                 return `${num} секунд`
@@ -171,14 +179,15 @@ function timeUpdate(){
             currentLessons[lesson].children[0].classList.add('current_lesson_span')
             slide_1_cont.querySelector('.current_lesson div').style.cssText = `--percent:${percent}`
             ////////////////////////////
-            headerInformation.innerText = `До конца урока ${sklonenie(Math.round((timetable[index][1] - date)/1000/60), 'min')}`
+            headerInformation.innerText = `До конца урока\n${Math.round((timetable[index][1] - date)/1000/60)} мин`/*`До конца урока ${sklonenie(Math.round((timetable[index][1] - date)/1000/60), 'min')}`*/
 
         } else{
             if(timetable[index+1]){
                 if(element[1] < date && timetable[index+1][0] > date){
-                    headerInformation.innerText = `До конца перемены
+                    headerInformation.innerText = /*`До конца перемены
                     ${sklonenie(Math.floor((timetable[index+1][0]-date)/1000/60), 'min')}
-                    ${sklonenie((Math.floor((timetable[index+1][0]-date)/1000 % 60)), 'sec')}`
+                    ${sklonenie((Math.floor((timetable[index+1][0]-date)/1000 % 60)), 'sec')}`*/
+                    `До конца перемены\n${Math.floor((timetable[index+1][0]-date)/1000/60)} мин : ${Math.floor((timetable[index+1][0]-date)/1000 % 60)} сек`
                     
                     currentLessons[index].classList.add('current_lesson')
                     currentLessons[index].children[1].style.cssText = `--percent: 100`
