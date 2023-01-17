@@ -1,7 +1,7 @@
 {
     "name": "KRONIX",
     "short_name": "KRONIX",
-    "theme_color": "#000",
+    "theme_color": "#08001b",
     "background_color": "#f00a03",
     "display": "standalone",
     "orientation": "portrait",
