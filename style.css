@@ -54,6 +54,9 @@ table {
 :root{
     --index: calc(1vw + 1vh)
 }
+html{
+    scrollbar-color: #a49bbb #08001b;
+}
 body{
     background-color: #08001b;
     overflow: overlay;
@@ -341,6 +344,7 @@ body::-webkit-scrollbar-thumb {
     display: none;
     filter: invert(1);
     width: 42px;
+    height: 42px;
     transition: filter 0.3s;
 }
 .header_num_class p{
@@ -398,6 +402,7 @@ body::-webkit-scrollbar-thumb {
 }
 .burger_mobile_header img{
     width: 50px;
+    height: 50px;
     filter: invert(100%);
     cursor: pointer;
 }
@@ -406,6 +411,7 @@ body::-webkit-scrollbar-thumb {
     padding: 47px 0;
     margin: -47px 0;
     overflow: overlay;
+    overflow-y: auto;
 }
 .burger_ul li:not(:last-child){
     margin-bottom: 8px;
