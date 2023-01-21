@@ -27,7 +27,7 @@ self.addEventListener('install', async (e)=>{
         })()
     )*/
     const cache = await caches.open(staticCacheName)
-    array.forEach(element => {
+    staticAssets.forEach(element => {
         cache.add(element).catch((error)=>{
             console.log(error)
         })
