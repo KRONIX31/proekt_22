@@ -9,9 +9,7 @@ const staticAssets = [
     '/app.js',
     '/manifest.json',
     '/burger.svg',
-    '/close.svg',
-    '/Meteor_mobile.svg',
-    '/Meteor.svg',
+    '/close.svg'
 ]
 self.addEventListener('install', async (e)=>{
     console.log('service Worker установлен', e)
