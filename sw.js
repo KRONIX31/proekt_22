@@ -1,15 +1,15 @@
 const staticCacheName = 'static-cache-v3'
 const dynamicCacheName = 'dynamic-cache-v0'
 const staticAssets = [
-    '/index.html',
-    '/icon192.png',
-    '/icon512.png',
-    '/style.css',
-    '/main.js',
-    '/app.js',
-    '/manifest.json',
-    '/burger.svg',
-    '/close.svg'
+    'index.html',
+    'icon192.png',
+    'icon512.png',
+    'style.css',
+    'main.js',
+    'app.js',
+    'manifest.json',
+    'burger.svg',
+    'close.svg'
 ]
 self.addEventListener('install', async (e)=>{
     console.log('service Worker установлен', e)
