@@ -17,8 +17,19 @@ self.addEventListener('install', async (e)=>{
     console.log('service Worker установлен', e)
     self.skipWaiting()
 
-    const cache = await caches.open(staticCacheName)
-    await cache.addAll(staticAssets)
+    e.waitUntil(
+        (async() => {
+            try {
+                cache_obj = await caches.open(staticCacheName)
+                cache_obj.addAll(staticAssets)
+            }
+            catch{
+                console.log("error occured while caching...")
+            }
+        })()
+    )
+    //const cache = await caches.open(staticCacheName)
+    //await cache.addAll(staticAssets)
 })
 self.addEventListener('activate', async (e)=>{
     console.log('service Worker активирован', e)
