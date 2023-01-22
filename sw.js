@@ -1,4 +1,4 @@
-const staticCacheName = 'static-cache-v3'
+const staticCacheName = 'static-cache-v1'
 const dynamicCacheName = 'dynamic-cache-v0'
 const staticAssets = [
     'index.html',
@@ -51,9 +51,19 @@ self.addEventListener('activate', async (e)=>{
 })
 
 self.addEventListener('fetch', (e)=>{
-    e.respondWith(
+    /*e.respondWith(
         fetch(e.request).catch(function(){
             return caches.match(e.request)
         })
-    )
+    )*/
+    e.respondWith((async ()=>{
+        const response = await fetch(e.request)
+        if(response){
+            console.log('+', response)
+            return response
+        } else{
+            console.log('-', response)
+            return await caches.match(e.request)
+        }
+    })())
 })
