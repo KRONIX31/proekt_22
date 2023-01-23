@@ -1,6 +1,6 @@
-const staticCacheName = 'static-cache-v1'
-const dynamicCacheName = 'dynamic-cache-v0'
+const staticCacheName = 'static-cache-v2'
 const staticAssets = [
+    '.',
     'index.html',
     'icon192.png',
     'icon512.png',
@@ -57,13 +57,21 @@ self.addEventListener('fetch', (e)=>{
         })
     )*/
     e.respondWith((async ()=>{
-        const response = await fetch(e.request)
+        const response = await fetch(e.request).catch(error => {
+            console.warn(error)
+        })
         if(response){
-            console.log('+', response)
+            console.log('Internet', response)
             return response
         } else{
-            console.log('-', response)
-            return await caches.match(e.request)
+            caches.open(staticCacheName).then(cache => {
+                cache.match(e.request).then(cachedFile => {
+                    console.log('Файл найден в кэше', cachedFile)
+                    return cachedFile
+                }).catch(error => {
+                    console.warn('Файл в кэше не найден', error)
+                })
+            })
         }
     })())
 })
