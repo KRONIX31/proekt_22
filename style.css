@@ -329,6 +329,7 @@ body::-webkit-scrollbar-thumb {
 
 
 .header_num_class{
+    border-radius: 5px;
     flex: 0 auto;
     font-weight: 500;
     display: flex;
@@ -363,6 +364,7 @@ body::-webkit-scrollbar-thumb {
     text-align: center;
 }
 .full_date{
+    border-radius: 5px;
     flex: 1;
     font-size: calc(var(--index)*0.95);
     background-color: #17223b;
@@ -802,6 +804,19 @@ th{
     }
 }
 
+.eating_time{
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255,103,104,1);
+    padding: 9px 32px;
+    gap: 110px;
+    font-size: calc(var(--index)*0.9);
+    color: #f3f3f3;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+}
+.eating_time_breakfast, .eating_time_dinner{
+    text-align: center;
+}
 
 .app_footer{
     background-color: #0a0022;
@@ -812,6 +827,8 @@ th{
 .footer_wrapper{
     display: flex;
     align-items: center;
+    flex-direction: column;
+    gap: 25px;
     justify-content: center;
 }
 .footer_information{
@@ -819,12 +836,12 @@ th{
     align-items: center;
     flex-direction: row;
     background: rgba(0, 0, 0, 0.70);
-    padding: 6px 30px 6px 30px;
+    padding: 7px 16px 7px 16px;
 }
 
 .gitHubImg{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 .footer_wrapper a{
     -webkit-tap-highlight-color: rgba(201, 81, 81, 0.30);
@@ -837,9 +854,9 @@ th{
     margin-left: 5px;
 }
 .chic_img{
-    border-radius: 45%;
-    width: 22px;
-    height: 22px;
+    border-radius: 46%;
+    width: 20px;
+    height: 20px;
 }
 .nick{
     margin-left: 11px;
@@ -884,7 +901,7 @@ th{
     }
 
     .slide_1_container {
-        padding: 10px 15px;
+        padding: 10px 15px 35px 15px;
     }    
     .slide_1_container td{
         font-size: calc(var(--index)*1.4);
@@ -896,6 +913,11 @@ th{
     }
     .table_nav{
         display: flex;
+    }
+    .eating_time{
+        flex-direction: column;
+        gap: 15px;
+        font-size: calc(var(--index)*1.5);
     }
 }
 @media screen and (max-width: 560px){

@@ -35,6 +35,9 @@ const burgerUl = document.querySelectorAll('.burger_ul')
 // Var App
 const slide_1_cont = document.querySelector('.slide_1_container')
 const loadScreen = document.querySelector('.load_screen')
+const eatingTime = document.querySelector('.eating_time')
+const eatingTimeBreakfast = eatingTime.querySelector('.eating_time_breakfast')
+const eatingTimeDinner = eatingTime.querySelector('.eating_time_dinner')
 
 
 if(localStorage.getItem('localObject')){
@@ -146,7 +149,7 @@ function sklonenie(num, MinsOrSeconds) {
 }
 
 function timeUpdate(){
-    
+
     const date = new Date()
     headerFullDate.innerText = date.toLocaleString('ru-RU',{
         year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'
@@ -219,7 +222,28 @@ async function getdata(){
     render()
     timeUpdate()
     interval = setInterval(timeUpdate, 1000)
+
     function render(){
+        eatingTimeBreakfast.innerText = ''
+        eatingTimeDinner.innerText = ''
+        if(data[5].breakfast && data[5].dinner){
+            eatingTime.appendChild(eatingTimeBreakfast)
+            eatingTime.appendChild(eatingTimeDinner)
+            eatingTimeBreakfast.innerText = `Завтрак ${data[5].breakfast[1]} - ${data[5].breakfast[2]}`
+            eatingTimeDinner.innerText = `Обед ${data[5].dinner[1]} - ${data[5].dinner[2]}`
+        } else{
+            if(data[5].breakfast){
+                eatingTime.appendChild(eatingTimeBreakfast)
+                eatingTimeDinner.remove()
+                eatingTimeBreakfast.innerText = `Завтрак ${data[5].breakfast[1]} - ${data[5].breakfast[2]}`
+            }
+            if(data[5].dinner){
+                eatingTime.appendChild(eatingTimeDinner)
+                eatingTimeBreakfast.remove()
+                eatingTimeDinner.innerText = `Обед ${data[5].dinner[1]} - ${data[5].dinner[2]}`
+            }
+        }
+
         if(window.innerWidth > 640){ // Desktop Table
             const componentDesktop = `<table>
         <thead>
