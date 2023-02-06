@@ -2,8 +2,8 @@ const staticCacheName = 'static-cache-v5'
 const staticAssets = [
     '.',
     'index.html',
-    'icon192.png',
-    'icon512.png',
+    'logo_luch_192.png',
+    'logo_luch_512.png',
     'style.css',
     'main.js',
     'app.js',
