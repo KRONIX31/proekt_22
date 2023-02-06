@@ -472,7 +472,7 @@ async function getdata(){
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><span>${data[0][11]}</span><div></div></td>
+                                    <td><span>${data[1][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -526,7 +526,7 @@ async function getdata(){
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><span>${data[0][11]}</span><div></div></td>
+                                    <td><span>${data[2][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -580,7 +580,7 @@ async function getdata(){
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><span>${data[0][11]}</span><div></div></td>
+                                    <td><span>${data[3][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -634,7 +634,7 @@ async function getdata(){
                                 </tr>
                                 <tr>
                                     <th>11</th>
-                                    <td><span>${data[0][11]}</span><div></div></td>
+                                    <td><span>${data[4][11]}</span><div></div></td>
                                 </tr>
                             </tbody>
                         </table>
