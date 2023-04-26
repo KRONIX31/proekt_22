@@ -63,9 +63,9 @@ function spanAddListener(){
     })
 }
 function chooseClass(e){
-    slide_1_cont.innerHTML = `<div class="load_screen"><div></div></div>`
     const span = e.target
     if(!span.parentElement.classList.contains('burger_active')){
+        slide_1_cont.innerHTML = `<div class="load_screen"><div></div></div>`
         let spanText = span.innerText
         let spanNum = span.dataset.class
         console.log(spanNum, spanText)
@@ -89,6 +89,8 @@ function chooseClass(e){
                 burgerMobile.style.display = 'none'
             }, 240)
         }, 60)
+    } else{
+        console.log('already selected')
     }
 }
 

@@ -2,8 +2,8 @@ const staticCacheName = 'static-cache-v5'
 const staticAssets = [
     '.',
     'index.html',
-    'logo_luch_192.png',
-    'logo_luch_512.png',
+    'icon192.png',
+    'icon512.png',
     'style.css',
     'main.js',
     'app.js',
@@ -77,5 +77,5 @@ function getFromCache(req){
 }
 
 self.addEventListener('fetch', (e)=>{
-    e.respondWith(tryNetwork(e.request, 400).catch(()=> getFromCache(e.request)))
+    e.respondWith(tryNetwork(e.request, 9000).catch(()=> getFromCache(e.request)))
 })
