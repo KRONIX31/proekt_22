@@ -1,4 +1,4 @@
-const staticCacheName = 'static-cache-v5'
+const staticCacheName = 'static-cache-v6'
 const staticAssets = [
     '.',
     'index.html',
